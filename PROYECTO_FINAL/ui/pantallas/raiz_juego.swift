@@ -19,22 +19,7 @@ private struct TabPrincipal: View {
             Inventario().tabItem { Text("Inventario") }
             ChatAgente().tabItem { Text("Chat") }
             EscanerAR().tabItem { Text("Escaner AR") }
-            PestanaDebugPistas().tabItem { Text("Debug") }
-        }
-    }
-}
-
-private struct PestanaDebugPistas: View {
-    @Environment(GestorJuego.self) private var gestor
-
-    var body: some View {
-        VStack {
-            Text("DEBUG: desbloquear pistas manualmente")
-            ForEach(gestor.pistas_disponibles) { pista in
-                Button("Desbloquear \(pista.letra)") {
-                    gestor.desbloquear_pista(id: pista.id)
-                }
-            }
+            Radar().tabItem { Text("Radar") }
         }
     }
 }

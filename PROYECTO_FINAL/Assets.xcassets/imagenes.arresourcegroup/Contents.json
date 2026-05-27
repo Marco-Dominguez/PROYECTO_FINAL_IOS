@@ -5,7 +5,16 @@
   },
   "resources" : [
     {
+      "filename" : "C.arreferenceimage"
+    },
+    {
+      "filename" : "L.arreferenceimage"
+    },
+    {
       "filename" : "oyla.arreferenceimage"
+    },
+    {
+      "filename" : "X.arreferenceimage"
     }
   ]
 }

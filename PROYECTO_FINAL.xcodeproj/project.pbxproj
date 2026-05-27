@@ -287,7 +287,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.adventure-games";
-				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) Usa la camara para el seguimiento visual de las pistas";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Se usa la camara para el seguimiento visual de las pistas";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Se usa la ubicacion para guiar en los puntos de las pistas de la app";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -321,7 +322,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.adventure-games";
-				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) Usa la camara para el seguimiento visual de las pistas";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Se usa la camara para el seguimiento visual de las pistas";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Se usa la ubicacion para guiar en los puntos de las pistas de la app";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
