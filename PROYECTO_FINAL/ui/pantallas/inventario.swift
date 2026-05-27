@@ -8,36 +8,69 @@ struct Inventario: View {
     var body: some View {
         @Bindable var gestor_bindable = gestor
 
-        VStack {
-            Text("INVENTARIO DE FRAGMENTOS")
+        ZStack {
+            Color.sistema_arena.ignoresSafeArea()
 
-            List(gestor.pistas_disponibles) { pista in
-                HStack {
-                    if gestor.pistas_obtenidas.contains(pista.id) {
-                        Text(pista.letra)
-                        Text(pista.descripcion)
-                    } else {
-                        Text("???")
-                        Text("Fragmento bloqueado")
+            ScrollView {
+                VStack(alignment: .leading, spacing: 18) {
+                    EncabezadoPantalla(
+                        preheader: "> INVENTARIO  /  FRAGMENTOS RECUPERADOS",
+                        titulo: "Inventario"
+                    )
+
+                    BarraPuntos()
+
+                    PanelSistema {
+                        VStack(alignment: .leading, spacing: 0) {
+                            EtiquetaCorchete(texto: "/// FRAGMENTOS ///")
+                                .padding(.bottom, 8)
+
+                            ForEach(gestor.pistas_disponibles) { pista in
+                                FilaPistaInventario(
+                                    identificador: pista.id,
+                                    descripcion: pista.descripcion,
+                                    obtenida: gestor.pistas_obtenidas.contains(pista.id)
+                                )
+                            }
+                        }
+                    }
+
+                    BarraPuntos()
+
+                    PanelSistema {
+                        VStack(alignment: .leading, spacing: 12) {
+                            EtiquetaCorchete(texto: "/// DESENCRIPTADOR ///")
+
+                            CampoTextoSistema(
+                                marcador: "00000000",
+                                texto: $respuesta,
+                                usar_mono: true
+                            )
+
+                            HStack {
+                                Spacer()
+                                Button("VALIDAR") {
+                                    let acierto = gestor.validar_respuesta(respuesta)
+                                    intento_fallido = !acierto
+                                }
+                                .buttonStyle(.sistema)
+                            }
+
+                            if gestor.puzzle_resuelto {
+                                MensajeEstado(
+                                    texto: "VICTORIA: PROTOCOLO COMPLETADO",
+                                    tono: .exito
+                                )
+                            } else if intento_fallido {
+                                MensajeEstado(
+                                    texto: "CONTRASENA INCORRECTA",
+                                    tono: .error
+                                )
+                            }
+                        }
                     }
                 }
-            }
-
-            Text("DESENCRIPTADOR")
-
-            TextField("Contrasena maestra", text: $respuesta)
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled(true)
-
-            Button("Validar") {
-                let acierto = gestor.validar_respuesta(respuesta)
-                intento_fallido = !acierto
-            }
-
-            if gestor.puzzle_resuelto {
-                Text("VICTORIA: protocolo de rescate completado.")
-            } else if intento_fallido {
-                Text("Contrasena incorrecta. Intenta de nuevo.")
+                .padding(24)
             }
         }
         .alert(
