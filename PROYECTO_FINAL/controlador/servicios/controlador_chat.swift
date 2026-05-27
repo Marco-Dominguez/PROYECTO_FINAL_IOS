@@ -2,6 +2,7 @@ import FirebaseFirestore
 import Combine
 
 
+@MainActor
 @Observable
 class ServicioChat{
     var mensajes: [Mensaje] = []
@@ -16,17 +17,33 @@ class ServicioChat{
         usuario_suscrito = usuario
         mensajes = []
 
+        print("[ServicioChat] suscribiendo listener para usuario=\(usuario)")
+
         listener = base_de_datos.collection("mensajes")
             .whereField("usuario", isEqualTo: usuario)
             .order(by: "timestamp")
-            .addSnapshotListener { snapshot, error in
-                if let error {
-                    print("[ServicioChat] error: \(error.localizedDescription)")
-                    return
-                }
-                guard let documento = snapshot?.documents else { return }
-                self.mensajes = documento.compactMap{ elemento in
-                    try? elemento.data(as: Mensaje.self)
+            .addSnapshotListener { [weak self] snapshot, error in
+                Task { @MainActor in
+                    guard let self else { return }
+                    if let error {
+                        print("[ServicioChat] ERROR listener: \(error.localizedDescription)")
+                        print("[ServicioChat] detalle completo: \(error)")
+                        return
+                    }
+                    guard let documentos = snapshot?.documents else {
+                        print("[ServicioChat] snapshot sin documentos")
+                        return
+                    }
+                    print("[ServicioChat] snapshot con \(documentos.count) documentos")
+                    let nuevos = documentos.compactMap { doc -> Mensaje? in
+                        do {
+                            return try doc.data(as: Mensaje.self)
+                        } catch {
+                            print("[ServicioChat] decode fallido para doc \(doc.documentID): \(error)")
+                            return nil
+                        }
+                    }
+                    self.fusionar(con: nuevos)
                 }
             }
     }
@@ -40,11 +57,21 @@ class ServicioChat{
             usuario: usuario
         )
 
+        fusionar(con: [mensaje])
+
         do{
             _ = try base_de_datos.collection("mensajes").addDocument(from: mensaje)
         }
         catch {
-            print("Hey, tiene un error \(error)")
+            print("[ServicioChat] error al guardar: \(error)")
         }
+    }
+
+    private func fusionar(con nuevos: [Mensaje]) {
+        var dict = Dictionary(uniqueKeysWithValues: mensajes.map { ($0.id, $0) })
+        for m in nuevos {
+            dict[m.id] = m
+        }
+        mensajes = dict.values.sorted { $0.timestamp < $1.timestamp }
     }
 }

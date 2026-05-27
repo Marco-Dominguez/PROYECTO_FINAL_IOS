@@ -92,14 +92,26 @@ public class ServicioIA {
 
         do {
             peticion.httpBody = try JSONSerialization.data(withJSONObject: cuerpo)
+
+            if let payload_str = String(data: peticion.httpBody ?? Data(), encoding: .utf8) {
+                print("[ServicioIA] >>> PETICION (\(historial.count) msgs en historial, \(recortado.count) enviados):")
+                print(payload_str)
+            }
+
             let (datos, respuesta) = try await URLSession.shared.data(for: peticion)
 
+            let cuerpo_crudo = String(data: datos, encoding: .utf8) ?? "<binario no decodificable>"
+            print("[ServicioIA] <<< RESPUESTA CRUDA:")
+            print(cuerpo_crudo)
+
             guard let http = respuesta as? HTTPURLResponse else {
+                print("[ServicioIA] error: respuesta no es HTTPURLResponse")
                 return .error("Respuesta HTTP invalida")
             }
+            print("[ServicioIA] <<< status code: \(http.statusCode)")
+
             guard (200..<300).contains(http.statusCode) else {
-                let texto = String(data: datos, encoding: .utf8) ?? "<sin cuerpo>"
-                return .error("Codigo \(http.statusCode): \(texto.prefix(200))")
+                return .error("Codigo \(http.statusCode): \(cuerpo_crudo.prefix(200))")
             }
 
             guard let json = try JSONSerialization.jsonObject(with: datos) as? [String: Any],
@@ -107,17 +119,29 @@ public class ServicioIA {
                   let primero = choices.first,
                   let mensaje = primero["message"] as? [String: Any],
                   let contenido = mensaje["content"] as? String else {
-                return .error("Formato de respuesta inesperado")
+                print("[ServicioIA] error: el JSON no contiene choices[0].message.content como String")
+                return .error("Formato de respuesta inesperado. Revisa la consola para ver el cuerpo crudo.")
+            }
+
+            if let reasoning = mensaje["reasoning_content"] as? String, !reasoning.isEmpty {
+                print("[ServicioIA] reasoning_content (no mostrado al usuario):")
+                print(reasoning)
             }
 
             let trim = contenido.trimmingCharacters(in: .whitespacesAndNewlines)
+            print("[ServicioIA] contenido parseado:")
+            print(trim)
+
             if trim.uppercased().hasPrefix(token_rechazo) {
                 let limpio = String(trim.dropFirst(token_rechazo.count))
                     .trimmingCharacters(in: .whitespacesAndNewlines)
+                print("[ServicioIA] tipo de respuesta: RECHAZO")
                 return .rechazo(limpio.isEmpty ? "Consulta fuera del alcance del protocolo de rescate." : limpio)
             }
+            print("[ServicioIA] tipo de respuesta: RESPUESTA")
             return .respuesta(trim)
         } catch {
+            print("[ServicioIA] excepcion: \(error)")
             return .error(error.localizedDescription)
         }
     }
