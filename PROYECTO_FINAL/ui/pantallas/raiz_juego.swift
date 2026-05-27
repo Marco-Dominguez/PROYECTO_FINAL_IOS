@@ -6,22 +6,9 @@ struct RaizJuego: View {
     var body: some View {
         switch gestor.fase {
         case .terminal:
-            PlaceholderTerminal()
+            TerminalEmergencia()
         case .jugando:
             TabPrincipal()
-        }
-    }
-}
-
-private struct PlaceholderTerminal: View {
-    @Environment(GestorJuego.self) private var gestor
-
-    var body: some View {
-        VStack {
-            Text("Terminal de Emergencia (placeholder)")
-            Button("Iniciar Protocolo de Rescate") {
-                gestor.iniciar_juego()
-            }
         }
     }
 }
@@ -44,9 +31,11 @@ private struct TabPrincipal: View {
 }
 
 #Preview("Jugando") {
-    let gestor = GestorJuego()
-    gestor.iniciar_juego()
-    return RaizJuego()
+    RaizJuego()
         .environment(ControladorAplicacion())
-        .environment(gestor)
+        .environment({
+            let g = GestorJuego()
+            g.iniciar_juego()
+            return g
+        }())
 }
