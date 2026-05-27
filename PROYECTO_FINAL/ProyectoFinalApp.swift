@@ -5,6 +5,7 @@ import FirebaseCore
 struct ProyectoFinalApp: App {
     @State var controlador_general = ControladorAplicacion()
     @State var gestor_juego = GestorJuego()
+    @State var perfil_usuario = PerfilUsuario()
 
     init(){
         FirebaseApp.configure()
@@ -15,6 +16,7 @@ struct ProyectoFinalApp: App {
             RaizJuego()
                 .environment(controlador_general)
                 .environment(gestor_juego)
+                .environment(perfil_usuario)
 
             // PruebaConexionFirebase()
         }

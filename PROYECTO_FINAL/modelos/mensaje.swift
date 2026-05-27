@@ -5,4 +5,5 @@ struct Mensaje: Identifiable, Codable{
     var texto: String
     var remitente: String
     var timestamp: Date
+    var usuario: String? = nil
 }

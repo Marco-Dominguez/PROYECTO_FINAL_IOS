@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ChatAgente: View {
+    @Environment(PerfilUsuario.self) private var perfil
     @State private var servicio_chat = ServicioChat()
     @State private var servicio_ia = ServicioIA()
     @State private var mensaje: String = ""
@@ -77,6 +78,7 @@ struct ChatAgente: View {
                             .disabled(
                                 mensaje.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                                 || servicio_ia.enviando
+                                || perfil.nombre == nil
                             )
                         }
                     }
@@ -84,8 +86,10 @@ struct ChatAgente: View {
             }
             .padding(24)
         }
-        .task {
-            servicio_chat.obtener_mensajes()
+        .task(id: perfil.nombre) {
+            if let usuario = perfil.nombre {
+                servicio_chat.obtener_mensajes(usuario: usuario)
+            }
         }
     }
 
@@ -106,11 +110,12 @@ struct ChatAgente: View {
     }
 
     private func enviar() async {
+        guard let usuario = perfil.nombre else { return }
         let texto = mensaje.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !texto.isEmpty else { return }
         mensaje = ""
 
-        servicio_chat.enviar_mensaje(texto: texto, remitente: remitente_yo)
+        servicio_chat.enviar_mensaje(texto: texto, remitente: remitente_yo, usuario: usuario)
 
         let cantidad_previa = max(0, servicio_ia.ventana_contexto - 1)
         let historial_previo = Array(servicio_chat.mensajes.suffix(cantidad_previa))
@@ -130,13 +135,14 @@ struct ChatAgente: View {
 
         switch resultado {
         case .respuesta(let r):
-            servicio_chat.enviar_mensaje(texto: r, remitente: remitente_agente)
+            servicio_chat.enviar_mensaje(texto: r, remitente: remitente_agente, usuario: usuario)
         case .rechazo(let r):
-            servicio_chat.enviar_mensaje(texto: r, remitente: remitente_rechazo)
+            servicio_chat.enviar_mensaje(texto: r, remitente: remitente_rechazo, usuario: usuario)
         case .error(let e):
             servicio_chat.enviar_mensaje(
                 texto: "Error de transmision con IA-CJ: \(e)",
-                remitente: remitente_error
+                remitente: remitente_error,
+                usuario: usuario
             )
         }
     }
@@ -144,4 +150,9 @@ struct ChatAgente: View {
 
 #Preview {
     ChatAgente()
+        .environment({
+            let p = PerfilUsuario()
+            p.establecer(nombre: "operador_demo")
+            return p
+        }())
 }

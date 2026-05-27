@@ -22,6 +22,7 @@ public class GestorJuego {
     public var pistas_obtenidas: Set<String> = []
     public var pista_recien_obtenida: Pista? = nil
     public var puzzle_resuelto: Bool = false
+    public private(set) var usuario_actual: String? = nil
 
     public init() {}
 
@@ -36,6 +37,7 @@ public class GestorJuego {
         }
         pistas_obtenidas.insert(id)
         pista_recien_obtenida = pista
+        guardar()
     }
 
     public func descartar_popup() {
@@ -45,7 +47,30 @@ public class GestorJuego {
     @discardableResult
     public func validar_respuesta(_ texto: String) -> Bool {
         let acierto = texto == respuesta_correcta
-        if acierto { puzzle_resuelto = true }
+        if acierto {
+            puzzle_resuelto = true
+            guardar()
+        }
         return acierto
+    }
+
+    public func cargar_para(usuario: String) {
+        usuario_actual = usuario
+        let prefijo = "progreso.\(usuario)"
+        let defaults = UserDefaults.standard
+
+        let pistas = defaults.stringArray(forKey: "\(prefijo).pistas_obtenidas") ?? []
+        pistas_obtenidas = Set(pistas)
+        puzzle_resuelto = defaults.bool(forKey: "\(prefijo).puzzle_resuelto")
+        pista_recien_obtenida = nil
+        fase = .terminal
+    }
+
+    private func guardar() {
+        guard let usuario = usuario_actual else { return }
+        let prefijo = "progreso.\(usuario)"
+        let defaults = UserDefaults.standard
+        defaults.set(Array(pistas_obtenidas), forKey: "\(prefijo).pistas_obtenidas")
+        defaults.set(puzzle_resuelto, forKey: "\(prefijo).puzzle_resuelto")
     }
 }
