@@ -11,12 +11,12 @@ class ReposoAnimacion: Estado{
         
         switch tipo_interaccion{
             case .entidad:
-                contexto?.enviar_peticion(Comando(tipo: .activar_animacion, carga_util: "vuelta_rapida"))
+                _ = contexto?.enviar_peticion(Comando(tipo: .activar_animacion, carga_util: "vuelta_rapida"))
                 
             case .boton:
                 switch interaccion{
                     case .realizar_accion:
-                        contexto?.enviar_peticion(Comando(tipo: .activar_animacion, carga_util: "da_un_salto"))
+                        _ = contexto?.enviar_peticion(Comando(tipo: .activar_animacion, carga_util: "da_un_salto"))
                         contexto?.realizar_cambio_de_estado(a: SaltoAnimacion.nombre)
                     default:
                         print("Comanod no especifciado")

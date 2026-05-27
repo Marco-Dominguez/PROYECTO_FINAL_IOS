@@ -11,7 +11,7 @@ struct ChatView: View {
     
     var body: some View {
         VStack{
-            Text("La respuesta del agente fue: \(entidad_ia.peticion?.respuesta)")
+            Text("La respuesta del agente fue: \(entidad_ia.peticion?.respuesta ?? "Sin Respuesta")")
             
             TextField("Cuentame que enviar", text: $mensaje_a_enviar)
               

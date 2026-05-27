@@ -122,7 +122,7 @@ public class ControladorAplicacion{
             raiz_escena.scene?.addAnchor(ancla_imagen)
             raiz_escena.scene?.addAnchor(ancla_rostro)
             
-            if let escenario = escenario{
+            if escenario != nil{
                 print("En este momento ya existe el escenario.")
             }
             else {
@@ -144,7 +144,7 @@ public class ControladorAplicacion{
         }
         
         for ancla in entidades_ancla{
-            print("[\(#file.split(separator: "/").last):\(#function)] se esta viendo la ancla \(ancla.name) ? \(ancla.isEnabled)")
+            print("[\(#file.split(separator: "/").last ?? "Sin respuesta"):\(#function)] se esta viendo la ancla \(ancla.name) ? \(ancla.isEnabled)")
         }
     }
     

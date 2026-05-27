@@ -10,10 +10,7 @@ extension ControladorAplicacion: ProcesarComandos {
                 
             default:
                 fatalError("[\(#file):\(#function)] NO has implentado esto campeon \(tipo)")
-                return false
         }
-        
-        return false
     }
     
     func realizar_comando(_ comanda: Comando) -> Bool {
@@ -28,10 +25,6 @@ extension ControladorAplicacion: ProcesarComandos {
                 do {
                     try? pantallas_emergentes.append( PantallasDisponibles(from: comanda.carga_util as! Decoder) )
                 }
-                
-            default:
-                fatalError("[\(#file):\(#function)] NO has implentado esto campeon \(comanda.tipo)")
-                return false
         }
         
         return false

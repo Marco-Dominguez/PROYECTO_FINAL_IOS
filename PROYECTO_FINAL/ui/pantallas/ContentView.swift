@@ -43,7 +43,7 @@ struct Inicio: View{
                                 await controlador.servicio_ar()
                             }
                             .onReceive(NotificationCenter.default.publisher(for: Notification.Name("RealityKit.NotificationTrigger"))){ notificacion in
-                                guard let notificacion = notificacion.userInfo?["RealityKit.NotificationTrigger.Identifier"] as? String else { return }
+                                guard notificacion.userInfo?["RealityKit.NotificationTrigger.Identifier"] is String else { return }
                                 
                                 // controlador.escuchar_comportamiento(notificacion)
                                 controlador.actualizar_estados(.notificacion, .so_on_so_on)
