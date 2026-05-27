@@ -13,6 +13,8 @@ struct ProyectoFinalApp: App {
         WindowGroup {
             SeguimientoImagenes()
                 .environment(controlador_general)
+            
+            // PruebaConexionFirebase()
         }
     }
 }
