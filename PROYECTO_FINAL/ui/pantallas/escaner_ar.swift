@@ -34,13 +34,16 @@ struct EscanerAR: View {
                     }
                 }
             }
+            .ignoresSafeArea()
 
-            VStack {
-                Text("ESCANER AR")
-                Text("Apunta la camara a las imagenes marcadas X, C y L")
+            VStack(spacing: 12) {
+                hud_superior
+
                 Spacer()
-                Text("Detectadas: \(gestor.pistas_obtenidas.sorted().joined(separator: ", "))")
+
+                hud_inferior
             }
+            .padding(16)
         }
         .alert(
             "Fragmento obtenido",
@@ -54,6 +57,51 @@ struct EscanerAR: View {
         } message: { pista in
             Text("Has recuperado el fragmento: \(pista.letra) (valor \(pista.valor_romano))")
         }
+    }
+
+    private var hud_superior: some View {
+        PanelHUD {
+            VStack(alignment: .leading, spacing: 6) {
+                EtiquetaCorchete(texto: "/// ESCANER AR  /  IMAGE TRACKING ///")
+
+                Text("Apunta la camara a las marcas X, C y L para recuperar los fragmentos.")
+                    .font(.sistema_cuerpo)
+                    .foregroundStyle(Color.sistema_marron)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+
+    private var hud_inferior: some View {
+        PanelHUD {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    EtiquetaCorchete(texto: "/// DETECCIONES ///")
+                    Spacer()
+                    Text("\(conteo_detectadas)/\(pistas_ar.count)")
+                        .font(.sistema_dato)
+                        .foregroundStyle(Color.sistema_marron)
+                }
+
+                VStack(spacing: 0) {
+                    ForEach(pistas_ar, id: \.self) { id in
+                        FilaPistaInventario(
+                            identificador: id,
+                            descripcion: descripcion_pista(id),
+                            obtenida: gestor.pistas_obtenidas.contains(id)
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private var conteo_detectadas: Int {
+        pistas_ar.filter { gestor.pistas_obtenidas.contains($0) }.count
+    }
+
+    private func descripcion_pista(_ id: String) -> String {
+        gestor.pistas_disponibles.first(where: { $0.id == id })?.descripcion ?? "Fragmento"
     }
 }
 
