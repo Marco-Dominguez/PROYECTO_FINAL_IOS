@@ -14,12 +14,34 @@ struct RaizJuego: View {
 }
 
 private struct TabPrincipal: View {
+    @State private var indice_activo: Int = 0
+
+    private let titulos: [String] = ["Inventario", "Chat", "Escaner AR", "Radar"]
+
     var body: some View {
-        TabView {
-            Inventario().tabItem { Text("Inventario") }
-            ChatAgente().tabItem { Text("Chat") }
-            EscanerAR().tabItem { Text("Escaner AR") }
-            Radar().tabItem { Text("Radar") }
+        ZStack {
+            Color.sistema_arena.ignoresSafeArea()
+
+            VStack(spacing: 0) {
+                contenido_activo
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+                BarraPestanas(
+                    titulos: titulos,
+                    indice_activo: $indice_activo
+                )
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var contenido_activo: some View {
+        switch indice_activo {
+        case 0: Inventario()
+        case 1: ChatAgente()
+        case 2: EscanerAR()
+        case 3: Radar()
+        default: EmptyView()
         }
     }
 }
