@@ -17,6 +17,19 @@ struct ChatAgente: View {
 
                 BarraPuntos()
 
+                PanelSistema {
+                    VStack(alignment: .leading, spacing: 8) {
+                        EtiquetaCorchete(texto: "/// AGENTE R.O.M.A. ///")
+                        HStack {
+                            Spacer()
+                            VisorModelo3D()
+                            Spacer()
+                        }
+                    }
+                }
+
+                BarraPuntos()
+
                 ScrollView {
                     VStack(alignment: .leading, spacing: 12) {
                         if let peticion = servicio.peticion {
