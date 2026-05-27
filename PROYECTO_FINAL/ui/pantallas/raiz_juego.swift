@@ -16,10 +16,25 @@ struct RaizJuego: View {
 private struct TabPrincipal: View {
     var body: some View {
         TabView {
-            Text("Inventario").tabItem { Text("Inventario") }
+            Inventario().tabItem { Text("Inventario") }
             Text("Chat").tabItem { Text("Chat") }
-            Text("Escáner AR").tabItem { Text("Escáner AR") }
-            Text("Radar").tabItem { Text("Radar") }
+            Text("Escaner AR").tabItem { Text("Escaner AR") }
+            PestanaDebugPistas().tabItem { Text("Debug") }
+        }
+    }
+}
+
+private struct PestanaDebugPistas: View {
+    @Environment(GestorJuego.self) private var gestor
+
+    var body: some View {
+        VStack {
+            Text("DEBUG: desbloquear pistas manualmente")
+            ForEach(gestor.pistas_disponibles) { pista in
+                Button("Desbloquear \(pista.letra)") {
+                    gestor.desbloquear_pista(id: pista.id)
+                }
+            }
         }
     }
 }
