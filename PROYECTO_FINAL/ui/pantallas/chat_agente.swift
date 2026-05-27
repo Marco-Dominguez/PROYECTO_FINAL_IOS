@@ -6,38 +6,80 @@ struct ChatAgente: View {
     @State private var mensaje: String = ""
 
     var body: some View {
-        VStack {
-            Text("CANAL CON EL AGENTE")
+        ZStack {
+            Color.sistema_arena.ignoresSafeArea()
 
-            List {
-                if let peticion = servicio.peticion {
-                    Section("Tu mensaje") {
-                        Text(peticion.mensaje)
-                    }
-                    Section("Respuesta del agente") {
-                        if let respuesta = peticion.respuesta, !respuesta.isEmpty {
-                            Text(respuesta)
+            VStack(alignment: .leading, spacing: 18) {
+                EncabezadoPantalla(
+                    preheader: "> CANAL SEGURO  /  AGENTE R.O.M.A.",
+                    titulo: "Comunicaciones"
+                )
+
+                BarraPuntos()
+
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 12) {
+                        if let peticion = servicio.peticion {
+                            BloqueTransmision(
+                                etiqueta: "/// TU MENSAJE ///",
+                                cuerpo: peticion.mensaje
+                            )
+
+                            BloqueTransmision(
+                                etiqueta: "/// RESPUESTA DE R.O.M.A. ///",
+                                cuerpo: cuerpo_respuesta(peticion.respuesta)
+                            )
+
+                            MensajeEstado(
+                                texto: "STATUS: \(estado_legible(peticion.estado).uppercased())",
+                                tono: peticion.estado == .resultado ? .exito : .neutro
+                            )
                         } else {
-                            Text("Esperando respuesta...")
+                            MensajeEstado(
+                                texto: "SIN TRANSMISIONES. ENVIA UN MENSAJE PARA INICIAR.",
+                                tono: .neutro
+                            )
                         }
-                        Text("Estado: \(estado_legible(peticion.estado))")
                     }
-                } else {
-                    Text("Aun no has enviado ningun mensaje.")
+                }
+
+                BarraPuntos()
+
+                PanelSistema {
+                    VStack(alignment: .leading, spacing: 10) {
+                        EtiquetaCorchete(texto: "/// ENTRADA ///")
+
+                        CampoTextoSistema(
+                            marcador: "Escribe tu mensaje",
+                            texto: $mensaje
+                        )
+
+                        HStack {
+                            Spacer()
+                            Button("ENVIAR") {
+                                let texto = mensaje.trimmingCharacters(in: .whitespacesAndNewlines)
+                                guard !texto.isEmpty else { return }
+                                servicio.crear_peticion(
+                                    contexto: contexto_actual(),
+                                    mensaje_del_usario: texto
+                                )
+                                mensaje = ""
+                            }
+                            .buttonStyle(.sistema)
+                            .disabled(mensaje.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                        }
+                    }
                 }
             }
-
-            TextField("Escribe tu mensaje", text: $mensaje, axis: .vertical)
-                .autocorrectionDisabled(true)
-
-            Button("Enviar") {
-                let texto = mensaje.trimmingCharacters(in: .whitespacesAndNewlines)
-                guard !texto.isEmpty else { return }
-                servicio.crear_peticion(contexto: contexto_actual(), mensaje_del_usario: texto)
-                mensaje = ""
-            }
-            .disabled(mensaje.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            .padding(24)
         }
+    }
+
+    private func cuerpo_respuesta(_ respuesta: String?) -> String {
+        guard let respuesta, !respuesta.isEmpty else {
+            return "Esperando respuesta del agente..."
+        }
+        return respuesta
     }
 
     private func contexto_actual() -> Contexto {
