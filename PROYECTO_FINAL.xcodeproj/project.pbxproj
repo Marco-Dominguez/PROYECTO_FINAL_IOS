@@ -10,11 +10,13 @@
 		8507DC3D2FC6744700E64DF5 /* mundo_virtual in Frameworks */ = {isa = PBXBuildFile; productRef = 8507DC3C2FC6744700E64DF5 /* mundo_virtual */; };
 		8507DC412FC6776100E64DF5 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 8507DC402FC6776100E64DF5 /* FirebaseCore */; };
 		8507DC432FC6776900E64DF5 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 8507DC422FC6776900E64DF5 /* FirebaseFirestore */; };
+		8507DC452FC67EEF00E64DF5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8507DC442FC67EEF00E64DF5 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8507DBAA2FC6698900E64DF5 /* PROYECTO_FINAL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PROYECTO_FINAL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8507DC3A2FC6741700E64DF5 /* mundo_virtual */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = mundo_virtual; sourceTree = "<group>"; };
+		8507DC442FC67EEF00E64DF5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -46,6 +48,7 @@
 				8507DBAC2FC6698900E64DF5 /* PROYECTO_FINAL */,
 				8507DC3F2FC6776100E64DF5 /* Frameworks */,
 				8507DBAB2FC6698900E64DF5 /* Products */,
+				8507DC442FC67EEF00E64DF5 /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -135,6 +138,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8507DC452FC67EEF00E64DF5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
