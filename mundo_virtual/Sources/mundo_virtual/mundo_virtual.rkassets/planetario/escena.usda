@@ -1,0 +1,427 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 2.0 (494.100.6)"
+    }
+    defaultPrim = "luna"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "luna"
+{
+    reorder nameChildren = ["Moon", "brillitos", "anim_1", "rotacion_infinita", "saltito", "vuelta_rapida"]
+    def "Moon" (
+        active = true
+        references = @Moon.usdz@
+    )
+    {
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def Xform "brillitos"
+    {
+        def RealityKitComponent "VFXEmitter"
+        {
+            token info:id = "RealityKit.VFXEmitter"
+
+            def RealityKitStruct "currentState"
+            {
+                token birthDirection = "Normal"
+                token birthLocation = "Surface"
+                float3 emissionDirection = (0, 0, 0)
+                double emissionDuration = 1
+                double emissionDurationVariation = 0
+                token emitterShape = "Sphere"
+                double idleDuration = 0
+                double idleDurationVariation = 0
+                bool isLocal = 0
+                bool isSpawningEnabled = 1
+                bool loops = 1
+                float particleSpeed = 0.06
+                float particleSpeedVariation = 0.04
+                float3 shapeSize = (0.05, 0.05, 0.05)
+                bool spawnInheritParentColor = 1
+                token spawnOccasion = "OnUpdate"
+                float spawnSpreadFactor = 0
+                float spawnSpreadFactorVariation = 0
+                float spawnVelocityFactor = 1
+                double warmupDuration = 1.5
+
+                def RealityKitStruct "mainEmitter"
+                {
+                    float3 acceleration = (0, 0, 0)
+                    token animationRepeatMode = "Looping"
+                    token billboardMode = "Billboard"
+                    float birthRate = 40
+                    float birthRateVariation = 0
+                    token blendMode = "Additive"
+                    float colorEvolutionPower = 1
+                    int64 columnCount = 4
+                    float dampingFactor = 0.25
+                    float4 endColorA = (1, 0.051991113, 1, 1)
+                    float4 endColorB = (0, 0.98059916, 1, 1)
+                    float frameRate = 30
+                    float frameRateVariation = 0
+                    int64 initialFrame = 0
+                    int64 initialFrameVariation = 2
+                    bool isAnimated = 1
+                    bool isLightingEnabled = 0
+                    float noiseAnimationSpeed = 1
+                    float noiseScale = 1
+                    float noiseStrength = 0.1
+                    token opacityOverLife = "GradualFadeInOut"
+                    float particleAngle = 0
+                    float particleAngleVariation = 0.5
+                    float particleAngularVelocity = 0.25
+                    float particleAngularVelocityVariation = 0.5
+                    asset particleImage = @ParticleEmitterPresetTextures/twinkle.exr@
+                    double particleLifeSpan = 1
+                    double particleLifeSpanVariation = 0.2
+                    float particleMass = 1
+                    float particleMassVariation = 0.2
+                    float particleSize = 0.05
+                    float particleSizeVariation = 0.004
+                    float3 radialGravityCenter = (1, 1, 0)
+                    float radialGravityStrength = 0
+                    int64 rowCount = 4
+                    float sizeMultiplierAtEndOfLifespan = 0.35
+                    float sizeMultiplierAtEndOfLifespanPower = 3
+                    token sortOrder = "IncreasingDepth"
+                    float spreadingAngle = 0
+                    float4 startColorA = (1, 0.051991113, 1, 1)
+                    float4 startColorB = (0.9986965, 0.9674097, 0, 1)
+                    float stretchFactor = 0
+                    bool useEndColor = 1
+                    bool useEndColorRange = 1
+                    bool useStartColorRange = 1
+                    float3 vortexDirection = (0, 1, 0)
+                    float vortexStrength = 0
+                }
+
+                def RealityKitStruct "spawnedEmitter"
+                {
+                    float3 acceleration = (0, -0.04, 0)
+                    token animationRepeatMode = "AutoReverse"
+                    token billboardMode = "Billboard"
+                    float birthRate = 25
+                    float birthRateVariation = 0
+                    token blendMode = "Additive"
+                    float colorEvolutionPower = 0
+                    int64 columnCount = 4
+                    float dampingFactor = 3
+                    float4 endColorA = (0, 0.98059916, 1, 1)
+                    float4 endColorB = (1, 0.051991113, 1, 1)
+                    float frameRate = 24
+                    float frameRateVariation = 0
+                    int64 initialFrame = 2
+                    int64 initialFrameVariation = 4
+                    bool isAnimated = 1
+                    bool isLightingEnabled = 0
+                    float noiseAnimationSpeed = 0.25
+                    float noiseScale = 1
+                    float noiseStrength = 0.1
+                    token opacityOverLife = "GradualFadeInOut"
+                    float particleAngle = 0.745
+                    float particleAngleVariation = 0.25
+                    float particleAngularVelocity = 0.25
+                    float particleAngularVelocityVariation = 0
+                    asset particleImage = @ParticleEmitterPresetTextures/twinkle.exr@
+                    double particleLifeSpan = 0.75
+                    double particleLifeSpanVariation = 0.25
+                    float particleMass = 1
+                    float particleMassVariation = 2
+                    float particleSize = 0.02
+                    float particleSizeVariation = 0.004
+                    float3 radialGravityCenter = (0, 0, 0)
+                    float radialGravityStrength = 0
+                    int64 rowCount = 4
+                    float sizeMultiplierAtEndOfLifespan = 0
+                    float sizeMultiplierAtEndOfLifespanPower = 1
+                    token sortOrder = "IncreasingID"
+                    float spreadingAngle = 0
+                    float4 startColorA = (1, 0.051991113, 1, 0.04)
+                    float4 startColorB = (0, 0.98059916, 1, 0.04)
+                    float stretchFactor = 0
+                    bool useEndColor = 0
+                    bool useEndColorRange = 1
+                    bool useStartColorRange = 1
+                    float3 vortexDirection = (0, 1, 0)
+                    float vortexStrength = 0
+                }
+            }
+        }
+    }
+
+    def Xform "PointLight"
+    {
+        float3 xformOp:translate = (-0.18102139, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def RealityKitComponent "PointLight"
+        {
+            float3 color = (1, 0, 0.4265026)
+            token info:id = "RealityKit.PointLight"
+            float intensity = 2000
+        }
+    }
+
+    def RealityKitTimeline "anim_1"
+    {
+        reorder nameChildren = ["Track", "Track2"]
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Spin"
+            {
+                string actionKind = "spin"
+                int blendLayer = 400
+                double duration = 3
+                uniform token info:id = "F3166D55-A55D-4C27-AAE3-35A20DECCB73"
+                float revolutions = 2
+                double startTime = 0
+                rel target = </luna/Moon>
+
+                def RealityKitStruct "timingFunction"
+                {
+                    token type = "linear"
+                }
+            }
+        }
+
+        def RealityKitTrack "Track2"
+        {
+            def RealityKitAction "Orbit"
+            {
+                string actionKind = "orbit"
+                float3 axis = (0, 0.5, 0.5)
+                int blendLayer = 300
+                double duration = 3
+                uniform token info:id = "E817A6D6-8803-49B4-8A77-7C5D4BA43392"
+                rel pivotEntity = </luna/Moon>
+                float revolutions = -1
+                double startTime = 0
+                rel target = </luna/PointLight>
+            }
+        }
+    }
+
+    def RealityKitTimeline "rotacion_infinita"
+    {
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Play_Timeline"
+            {
+                string actionKind = "timeline"
+                int blendLayer = 500
+                double duration = 3
+                uniform token info:id = "9DFF8493-C749-406E-9EAE-D5624BA3F0F5"
+                double loopCount = 0
+                double startTime = 0
+                rel timeline = </luna/anim_1>
+            }
+        }
+    }
+
+    def RealityKitComponent "RCP_BehaviorsContainer"
+    {
+        rel behaviors = [
+            </luna/OnAddedToScene>,
+            </luna/OnNotification>,
+            </luna/OnNotification2>,
+        ]
+        uniform token info:id = "RCP.BehaviorsContainer"
+    }
+
+    def Preliminary_Behavior "OnAddedToScene"
+    {
+        rel actions = </luna/OnAddedToScene/Action>
+        uniform bool exclusive
+        rel triggers = </luna/OnAddedToScene/Trigger>
+
+        def Preliminary_Trigger "Trigger"
+        {
+            rel affectedObjects = </luna>
+            token info:id = "SceneTransition"
+        }
+
+        def Preliminary_Action "Action"
+        {
+            rel affectedObjects = </luna>
+            rel animationLibraryKey = </luna/rotacion_infinita>
+            rel animationLibraryKeyOverrideKey = </luna/OnAddedToScene/Trigger>
+            token info:id = "PlayTimeline"
+            int loops = 0
+            int performCount = 1
+            token type = "serial"
+        }
+    }
+
+    def RealityKitComponent "InputTarget"
+    {
+        uniform token info:id = "RealityKit.InputTarget"
+    }
+
+    def RealityKitTimeline "saltito"
+    {
+        reorder nameChildren = ["Track2", "Track"]
+        def RealityKitTrack "Track"
+        {
+            reorder nameChildren = ["Transform_To", "Transform_To2", "Notification"]
+            def RealityKitAction "Transform_To"
+            {
+                string actionKind = "moveTo"
+                int blendLayer = 300
+                double duration = 1
+                uniform token info:id = "644949B1-4C68-4FB2-A235-F3F416A14EBA"
+                float3 position = (0, 1, 0)
+                quatf rotation = (1, 0, 0, 0)
+                float3 scale = (1, 1, 1)
+                double startTime = 0
+                rel target = </luna/Moon>
+
+                def RealityKitStruct "transformMode"
+                {
+                    rel referenceEntity = </luna>
+                    token type = "parent"
+                }
+
+                def RealityKitStruct "timingFunction"
+                {
+                    token type = "easeIn"
+                }
+            }
+
+            def RealityKitAction "Transform_To2"
+            {
+                string actionKind = "moveTo"
+                int blendLayer = 300
+                double duration = 1
+                uniform token info:id = "644949B1-4C68-4FB2-A235-F3F416A14EBA"
+                float3 position = (0, 0, 0)
+                quatf rotation = (1, 0, 0, 0)
+                float3 scale = (1, 1, 1)
+                double startTime = 1.0000000001000002
+                rel target = </luna/Moon>
+                float2 ui:nodegraph:node:pos = (20, 20)
+                int ui:nodegraph:node:stackingOrder = 1
+
+                def RealityKitStruct "transformMode"
+                {
+                    rel referenceEntity = </luna>
+                    token type = "parent"
+                }
+
+                def RealityKitStruct "timingFunction"
+                {
+                    token type = "easeOut"
+                }
+            }
+        }
+
+        def RealityKitTrack "Track2"
+        {
+            def RealityKitAction "Notification"
+            {
+                string actionKind = "notification"
+                double duration = 0
+                uniform token info:id = "F1EE0690-6AB2-4BAC-BE23-186E0DCDFB2E"
+                string notificationName = "hola_mundo"
+                double startTime = 2.0000000002000005
+                rel target = </luna>
+            }
+        }
+    }
+
+    def Preliminary_Behavior "OnNotification"
+    {
+        rel actions = </luna/OnNotification/Action>
+        uniform bool exclusive
+        rel triggers = </luna/OnNotification/Trigger>
+
+        def Preliminary_Trigger "Trigger"
+        {
+            rel affectedObjects = </luna>
+            string identifier = "da_un_salto"
+            token info:id = "Notification"
+        }
+
+        def Preliminary_Action "Action"
+        {
+            rel affectedObjects = </luna>
+            rel animationLibraryKey = </luna/saltito>
+            rel animationLibraryKeyOverrideKey = </luna/OnNotification/Trigger>
+            token info:id = "PlayTimeline"
+            int loops = 0
+            int performCount = 1
+            token type = "serial"
+        }
+    }
+
+    def RealityKitComponent "Collider"
+    {
+        uint group = 1
+        uniform token info:id = "RealityKit.Collider"
+        uint mask = 4294967295
+        token type = "Default"
+
+        def RealityKitStruct "Shape"
+        {
+            float3 extent = (0.2, 0.2, 0.2)
+            token shapeType = "Box"
+
+            def RealityKitStruct "pose"
+            {
+                float3 position = (2.9802322e-8, 0, 3.7252903e-8)
+            }
+        }
+    }
+
+    def Preliminary_Behavior "OnNotification2"
+    {
+        rel actions = </luna/OnNotification2/Action>
+        uniform bool exclusive
+        rel triggers = </luna/OnNotification2/Trigger>
+
+        def Preliminary_Trigger "Trigger"
+        {
+            rel affectedObjects = </luna>
+            string identifier = "vuelta_rapida"
+            token info:id = "Notification"
+        }
+
+        def Preliminary_Action "Action"
+        {
+            rel affectedObjects = </luna>
+            rel animationLibraryKey = </luna/vuelta_rapida>
+            rel animationLibraryKeyOverrideKey = </luna/OnNotification2/Trigger>
+            token info:id = "PlayTimeline"
+            int loops = 0
+            int performCount = 1
+            token type = "serial"
+        }
+    }
+
+    def RealityKitTimeline "vuelta_rapida"
+    {
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Spin"
+            {
+                string actionKind = "spin"
+                int blendLayer = 400
+                double duration = 0.3
+                uniform token info:id = "CC8A73E9-E351-44A9-91C3-6BC3BEB9CC2E"
+                float revolutions = 5
+                double startTime = 0
+                rel target = </luna/Moon>
+
+                def RealityKitStruct "timingFunction"
+                {
+                }
+            }
+        }
+    }
+}
+

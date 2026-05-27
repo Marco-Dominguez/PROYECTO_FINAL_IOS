@@ -1,0 +1,173 @@
+{
+  "0570128D-DFD7-4E54-A639-288111E731D2" : {
+    "objectMetadataList" : [
+      [
+        "0570128D-DFD7-4E54-A639-288111E731D2",
+        "Root",
+        "anim_1",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0570128D-DFD7-4E54-A639-288111E731D2",
+        "Root",
+        "rotacion_infinita",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0570128D-DFD7-4E54-A639-288111E731D2",
+        "Root",
+        "rotacion_infinita"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0570128D-DFD7-4E54-A639-288111E731D2",
+        "Root",
+        "anim_1",
+        "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0570128D-DFD7-4E54-A639-288111E731D2",
+        "Root",
+        "anim_1"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0570128D-DFD7-4E54-A639-288111E731D2",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "E72E0D13-A9A4-4232-B93F-6E24E577B6E1" : {
+    "objectMetadataList" : [
+      [
+        "E72E0D13-A9A4-4232-B93F-6E24E577B6E1",
+        "luna",
+        "saltito",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E72E0D13-A9A4-4232-B93F-6E24E577B6E1",
+        "luna",
+        "saltito",
+        "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E72E0D13-A9A4-4232-B93F-6E24E577B6E1",
+        "luna",
+        "vuelta_rapida",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E72E0D13-A9A4-4232-B93F-6E24E577B6E1",
+        "luna"
+      ],
+      {
+        "disallowsFraming" : false,
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E72E0D13-A9A4-4232-B93F-6E24E577B6E1",
+        "Root"
+      ],
+      {
+        "disallowsFraming" : false,
+        "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "E72E0D13-A9A4-4232-B93F-6E24E577B6E1",
+        "Root",
+        "saltito",
+        "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E72E0D13-A9A4-4232-B93F-6E24E577B6E1",
+        "Root",
+        "saltito"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E72E0D13-A9A4-4232-B93F-6E24E577B6E1",
+        "Root",
+        "saltito",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E72E0D13-A9A4-4232-B93F-6E24E577B6E1",
+        "luna",
+        "vuelta_rapida"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E72E0D13-A9A4-4232-B93F-6E24E577B6E1",
+        "luna",
+        "saltito"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "F151639E-E013-4D2B-ABF5-85B8E4A32133" : {
+    "objectMetadataList" : [
+      [
+        "F151639E-E013-4D2B-ABF5-85B8E4A32133",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  }
+}

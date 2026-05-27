@@ -6,8 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		8507DC3D2FC6744700E64DF5 /* mundo_virtual in Frameworks */ = {isa = PBXBuildFile; productRef = 8507DC3C2FC6744700E64DF5 /* mundo_virtual */; };
+		8507DC412FC6776100E64DF5 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 8507DC402FC6776100E64DF5 /* FirebaseCore */; };
+		8507DC432FC6776900E64DF5 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 8507DC422FC6776900E64DF5 /* FirebaseFirestore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		8507DBAA2FC6698900E64DF5 /* PROYECTO_FINAL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PROYECTO_FINAL.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8507DC3A2FC6741700E64DF5 /* mundo_virtual */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = mundo_virtual; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -23,6 +30,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8507DC412FC6776100E64DF5 /* FirebaseCore in Frameworks */,
+				8507DC3D2FC6744700E64DF5 /* mundo_virtual in Frameworks */,
+				8507DC432FC6776900E64DF5 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -32,7 +42,9 @@
 		8507DBA12FC6698900E64DF5 = {
 			isa = PBXGroup;
 			children = (
+				8507DC3A2FC6741700E64DF5 /* mundo_virtual */,
 				8507DBAC2FC6698900E64DF5 /* PROYECTO_FINAL */,
+				8507DC3F2FC6776100E64DF5 /* Frameworks */,
 				8507DBAB2FC6698900E64DF5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +55,13 @@
 				8507DBAA2FC6698900E64DF5 /* PROYECTO_FINAL.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8507DC3F2FC6776100E64DF5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -65,6 +84,9 @@
 			);
 			name = PROYECTO_FINAL;
 			packageProductDependencies = (
+				8507DC3C2FC6744700E64DF5 /* mundo_virtual */,
+				8507DC402FC6776100E64DF5 /* FirebaseCore */,
+				8507DC422FC6776900E64DF5 /* FirebaseFirestore */,
 			);
 			productName = PROYECTO_FINAL;
 			productReference = 8507DBAA2FC6698900E64DF5 /* PROYECTO_FINAL.app */;
@@ -94,6 +116,10 @@
 			);
 			mainGroup = 8507DBA12FC6698900E64DF5;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				8507DC3B2FC6744700E64DF5 /* XCLocalSwiftPackageReference "mundo_virtual" */,
+				8507DC3E2FC674E700E64DF5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8507DBAB2FC6698900E64DF5 /* Products */;
 			projectDirPath = "";
@@ -256,6 +282,7 @@
 				DEVELOPMENT_TEAM = 3AQQ3V2383;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.adventure-games";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -288,6 +315,7 @@
 				DEVELOPMENT_TEAM = 3AQQ3V2383;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.adventure-games";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -332,6 +360,41 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		8507DC3B2FC6744700E64DF5 /* XCLocalSwiftPackageReference "mundo_virtual" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = mundo_virtual;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8507DC3E2FC674E700E64DF5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.14.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8507DC3C2FC6744700E64DF5 /* mundo_virtual */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = mundo_virtual;
+		};
+		8507DC402FC6776100E64DF5 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8507DC3E2FC674E700E64DF5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		8507DC422FC6776900E64DF5 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8507DC3E2FC674E700E64DF5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8507DBA22FC6698900E64DF5 /* Project object */;
 }
