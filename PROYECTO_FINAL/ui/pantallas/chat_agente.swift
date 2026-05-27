@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ChatAgente: View {
     @Environment(PerfilUsuario.self) private var perfil
+    @Environment(GestorJuego.self) private var gestor
     @State private var servicio_chat = ServicioChat()
     @State private var servicio_ia = ServicioIA()
     @State private var mensaje: String = ""
@@ -10,6 +11,7 @@ struct ChatAgente: View {
     private let remitente_agente: String = "agente"
     private let remitente_rechazo: String = "sistema_rechazo"
     private let remitente_error: String = "sistema_error"
+    private let id_indicador_procesando: String = "__procesando__"
 
     var body: some View {
         ZStack {
@@ -36,25 +38,38 @@ struct ChatAgente: View {
 
                 BarraPuntos()
 
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 10) {
-                        if servicio_chat.mensajes.isEmpty {
-                            MensajeEstado(
-                                texto: "SIN TRANSMISIONES. ENVIA UN MENSAJE PARA INICIAR.",
-                                tono: .neutro
-                            )
-                        } else {
-                            ForEach(servicio_chat.mensajes) { msg in
-                                bloque_para(mensaje: msg)
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 10) {
+                            if servicio_chat.mensajes.isEmpty {
+                                MensajeEstado(
+                                    texto: "SIN TRANSMISIONES. ENVIA UN MENSAJE PARA INICIAR.",
+                                    tono: .neutro
+                                )
+                            } else {
+                                ForEach(servicio_chat.mensajes) { msg in
+                                    bloque_para(mensaje: msg)
+                                        .id(msg.id)
+                                }
+                            }
+
+                            if servicio_ia.enviando {
+                                MensajeEstado(
+                                    texto: "IA-CJ PROCESANDO...",
+                                    tono: .neutro
+                                )
+                                .id(id_indicador_procesando)
                             }
                         }
-
-                        if servicio_ia.enviando {
-                            MensajeEstado(
-                                texto: "IA-CJ PROCESANDO...",
-                                tono: .neutro
-                            )
-                        }
+                    }
+                    .onChange(of: servicio_chat.mensajes.count) {
+                        bajar_scroll(proxy: proxy)
+                    }
+                    .onChange(of: servicio_ia.enviando) {
+                        bajar_scroll(proxy: proxy)
+                    }
+                    .onAppear {
+                        bajar_scroll(proxy: proxy)
                     }
                 }
 
@@ -109,6 +124,31 @@ struct ChatAgente: View {
         }
     }
 
+    private func bajar_scroll(proxy: ScrollViewProxy) {
+        let id_destino: String? = servicio_ia.enviando
+            ? id_indicador_procesando
+            : servicio_chat.mensajes.last?.id
+
+        guard let id_destino else { return }
+        withAnimation(.easeOut(duration: 0.2)) {
+            proxy.scrollTo(id_destino, anchor: .bottom)
+        }
+    }
+
+    private func estado_juego_actual() -> EstadoJuegoIA {
+        let desbloqueadas = gestor.pistas_disponibles
+            .map { $0.id }
+            .filter { gestor.pistas_obtenidas.contains($0) }
+        let bloqueadas = gestor.pistas_disponibles
+            .map { $0.id }
+            .filter { !gestor.pistas_obtenidas.contains($0) }
+        return EstadoJuegoIA(
+            pistas_desbloqueadas: desbloqueadas,
+            pistas_bloqueadas: bloqueadas,
+            puzzle_resuelto: gestor.puzzle_resuelto
+        )
+    }
+
     private func enviar() async {
         guard let usuario = perfil.nombre else { return }
         let texto = mensaje.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -131,7 +171,10 @@ struct ChatAgente: View {
                 }
             } + [MensajeIA(rol: "user", contenido: texto)]
 
-        let resultado = await servicio_ia.generar_respuesta(historial: contexto)
+        let resultado = await servicio_ia.generar_respuesta(
+            historial: contexto,
+            estado_juego: estado_juego_actual()
+        )
 
         switch resultado {
         case .respuesta(let r):
@@ -150,6 +193,7 @@ struct ChatAgente: View {
 
 #Preview {
     ChatAgente()
+        .environment(GestorJuego())
         .environment({
             let p = PerfilUsuario()
             p.establecer(nombre: "operador_demo")
