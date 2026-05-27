@@ -17,7 +17,7 @@ private struct TabPrincipal: View {
     var body: some View {
         TabView {
             Inventario().tabItem { Text("Inventario") }
-            Text("Chat").tabItem { Text("Chat") }
+            ChatAgente().tabItem { Text("Chat") }
             Text("Escaner AR").tabItem { Text("Escaner AR") }
             PestanaDebugPistas().tabItem { Text("Debug") }
         }
