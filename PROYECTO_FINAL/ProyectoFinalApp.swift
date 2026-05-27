@@ -4,16 +4,18 @@ import FirebaseCore
 @main
 struct ProyectoFinalApp: App {
     @State var controlador_general = ControladorAplicacion()
-    
+    @State var gestor_juego = GestorJuego()
+
     init(){
         FirebaseApp.configure()
     }
-    
+
     var body: some Scene {
         WindowGroup {
-            SeguimientoImagenes()
+            RaizJuego()
                 .environment(controlador_general)
-            
+                .environment(gestor_juego)
+
             // PruebaConexionFirebase()
         }
     }
