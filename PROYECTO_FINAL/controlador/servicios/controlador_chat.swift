@@ -19,14 +19,14 @@ class ServicioChat{
         }
     }
     
-    func enviar_mensaje(texto: String){
+    func enviar_mensaje(texto: String, remitente: String = "yo"){
         let mensaje = Mensaje(
             id: UUID().uuidString,
             texto: texto,
-            remitente: "yo",
+            remitente: remitente,
             timestamp: Date()
         )
-        
+
         do{
             _ = try base_de_datos.collection("mensajes").addDocument(from: mensaje)
         }

@@ -1,3 +1,4 @@
 GoogleService-Info.plist
 *.md
 .DS_Store
+PROYECTO_FINAL/recursos/.env
