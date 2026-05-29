@@ -5,22 +5,21 @@
     }
     defaultPrim = "Root"
     metersPerUnit = 1
-    upAxis = "Y"
+    upAxis = "Z"
 )
 
 def Xform "Root"
 {
-    def "npc_viendo_lados" (
+    def "robotito_volteando_alrededor" (
         active = true
         customData = {
-            float3 rotationEulerHint = (1.5708098, -1.5707963, 0)
+            float3 rotationEulerHint = (0, 0, -1.5707964)
         }
-        prepend references = @../modelos/npc-viendo-lados.usdz@
+        prepend references = @../modelos/robotito-volteando-alrededor.usdz@
     )
     {
-        quatf xformOp:orient = (-0.49999648, 0.50000346, 0.49999648, 0.50000346)
-        float3 xformOp:scale = (0.5, 0.5, 0.5)
-        float3 xformOp:translate = (0, -0.65, -2.7152705e-8)
+        quatf xformOp:orient = (0.70710677, 0, 0, -0.70710677)
+        float3 xformOp:scale = (0.25, 0.25, 0.25)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
     }
 }

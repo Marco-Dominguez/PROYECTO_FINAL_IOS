@@ -6,7 +6,7 @@ struct RaizJuego: View {
 
     var body: some View {
         Group {
-            if perfil.nombre == nil {
+            if perfil.identificador_sesion == nil {
                 Onboarding()
             } else {
                 switch gestor.fase {
@@ -17,9 +17,9 @@ struct RaizJuego: View {
                 }
             }
         }
-        .task(id: perfil.nombre) {
-            if let nombre = perfil.nombre, gestor.usuario_actual != nombre {
-                gestor.cargar_para(usuario: nombre)
+        .task(id: perfil.identificador_sesion) {
+            if let usuario = perfil.identificador_sesion, gestor.usuario_actual != usuario {
+                gestor.cargar_para(usuario: usuario)
             }
         }
     }
@@ -27,16 +27,25 @@ struct RaizJuego: View {
 
 private struct TabPrincipal: View {
     @State private var indice_activo: Int = 0
+    @State private var mostrando_victoria: Bool = false
 
-    private let titulos: [String] = ["Inventario", "Chat", "Escaner AR", "Radar"]
+    private let titulos: [String] = ["Inventario", "Chat", "Escaner AR", "Radar", "Config"]
 
     var body: some View {
         ZStack {
             Color.sistema_arena.ignoresSafeArea()
 
             VStack(spacing: 0) {
-                contenido_activo
+                if mostrando_victoria {
+                    PantallaVictoria {
+                        mostrando_victoria = false
+                        indice_activo = 0
+                    }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    contenido_activo
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
 
                 BarraPestanas(
                     titulos: titulos,
@@ -49,10 +58,14 @@ private struct TabPrincipal: View {
     @ViewBuilder
     private var contenido_activo: some View {
         switch indice_activo {
-        case 0: Inventario()
+        case 0:
+            Inventario {
+                mostrando_victoria = true
+            }
         case 1: ChatAgente()
         case 2: EscanerAR()
         case 3: Radar()
+        case 4: PantallaConfiguracion()
         default: EmptyView()
         }
     }
@@ -71,7 +84,7 @@ private struct TabPrincipal: View {
         .environment(GestorJuego())
         .environment({
             let p = PerfilUsuario()
-            p.establecer(nombre: "operador_demo")
+            p.establecer(nombre: "operador_demo", llave: "demo")
             return p
         }())
 }
@@ -87,7 +100,7 @@ private struct TabPrincipal: View {
         }())
         .environment({
             let p = PerfilUsuario()
-            p.establecer(nombre: "operador_demo")
+            p.establecer(nombre: "operador_demo", llave: "demo")
             return p
         }())
 }

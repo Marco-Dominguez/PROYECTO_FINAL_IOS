@@ -2,15 +2,22 @@ import SwiftUI
 
 struct PanelSistema<Contenido: View>: View {
     let contenido: Contenido
+    var altura: CGFloat? = nil
 
-    init(@ViewBuilder contenido: () -> Contenido) {
+    init(altura: CGFloat? = nil, @ViewBuilder contenido: () -> Contenido) {
+        self.altura = altura
         self.contenido = contenido()
     }
 
     var body: some View {
         contenido
             .padding(12)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(
+                maxWidth: .infinity,
+                minHeight: altura,
+                maxHeight: altura,
+                alignment: .topLeading
+            )
             .background(Color.sistema_arena_clara)
             .overlay(Rectangle().stroke(Color.sistema_marron, lineWidth: 1))
     }

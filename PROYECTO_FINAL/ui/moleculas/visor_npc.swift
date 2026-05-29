@@ -1,44 +1,49 @@
 import SwiftUI
-import RealityKit
-import mundo_virtual
 
 struct VisorNPC: View {
-    var tamano: CGFloat = 200
-    var offset_y: Float = -0.5
-    var distancia_z: Float = 1.5
+    let estado: EstadoAnimacionNPC
+    let tamano: CGFloat
+    let offset_y: Float
+    let distancia_z: Float
+    let mostrar_barrotes: Bool
 
-    @State private var entidad: Entity? = nil
+    @State private var maquina_estados: MaquinaEstadosVisorNPC
 
-    private let ruta_escena: String = "personajes/escenas/npc-estando"
+    init(
+        estado: EstadoAnimacionNPC = .estando,
+        tamano: CGFloat = 200,
+        offset_y: Float = 0,
+        distancia_z: Float = 1.5,
+        mostrar_barrotes: Bool = true
+    ) {
+        self.estado = estado
+        self.tamano = tamano
+        self.offset_y = offset_y
+        self.distancia_z = distancia_z
+        self.mostrar_barrotes = mostrar_barrotes
+        _maquina_estados = State(initialValue: MaquinaEstadosVisorNPC(estado_inicial: estado))
+    }
 
     var body: some View {
-        ZStack {
-            Color.sistema_marron_tenue.opacity(0.25)
-
-            RealityView { contenido in
-                contenido.camera = .virtual
-                if let entidad {
-                    contenido.add(entidad)
-                }
-            } update: { contenido in
-                let actuales = Array(contenido.entities)
-                let primera = actuales.first
-                if primera !== entidad {
-                    for e in actuales {
-                        contenido.remove(e)
-                    }
-                    if let entidad {
-                        contenido.add(entidad)
-                    }
-                }
-            }
-
-            barrotes
+        VisorEscenaAnimada(
+            ruta_escena: maquina_estados.estado_actual.ruta,
+            tamano: tamano,
+            offset_y: offset_y,
+            distancia_z: distancia_z,
+            en_loop: maquina_estados.estado_actual.en_loop
+        ) {
+            maquina_estados.actualizar(.animacion_finalizada)
         }
-        .frame(width: tamano, height: tamano)
-        .overlay(Rectangle().stroke(Color.sistema_marron, lineWidth: 1))
-        .task {
-            await cargar()
+        .overlay {
+            if mostrar_barrotes {
+                barrotes
+            }
+        }
+        .onAppear {
+            maquina_estados.actualizar(.cambiar_estado(estado))
+        }
+        .onChange(of: estado) {
+            maquina_estados.actualizar(.cambiar_estado(estado))
         }
     }
 
@@ -53,44 +58,14 @@ struct VisorNPC: View {
             Spacer()
         }
     }
-
-    private func cargar() async {
-        guard entidad == nil else { return }
-        do {
-            let escena = try await Entity(named: ruta_escena, in: MundoVirtual)
-
-            let (anfitrion, animacion) = buscar_animacion(en: escena) ?? (escena, nil)
-            if let animacion {
-                anfitrion.playAnimation(animacion.repeat(), transitionDuration: 0.2)
-                print("[VisorNPC] reproduciendo \(ruta_escena)")
-            } else {
-                print("[VisorNPC] sin animaciones en \(ruta_escena)")
-            }
-
-            let contenedor = Entity()
-            contenedor.position = SIMD3<Float>(0, offset_y, distancia_z)
-            contenedor.addChild(escena)
-            entidad = contenedor
-        } catch {
-            print("[VisorNPC] error al cargar \(ruta_escena): \(error)")
-        }
-    }
-
-    private func buscar_animacion(en entidad: Entity) -> (Entity, AnimationResource)? {
-        if let primera = entidad.availableAnimations.first {
-            return (entidad, primera)
-        }
-        for hijo in entidad.children {
-            if let resultado = buscar_animacion(en: hijo) {
-                return resultado
-            }
-        }
-        return nil
-    }
 }
 
 #Preview {
-    VisorNPC()
-        .padding()
-        .background(Color.sistema_arena)
+    VStack(spacing: 12) {
+        VisorNPC()
+        VisorNPC(estado: .negando, mostrar_barrotes: false)
+        VisorNPC(estado: .viendo_lados, mostrar_barrotes: false)
+    }
+    .padding()
+    .background(Color.sistema_arena)
 }

@@ -17,8 +17,6 @@ class ServicioChat{
         usuario_suscrito = usuario
         mensajes = []
 
-        print("[ServicioChat] suscribiendo listener para usuario=\(usuario)")
-
         listener = base_de_datos.collection("mensajes")
             .whereField("usuario", isEqualTo: usuario)
             .order(by: "timestamp")
@@ -31,10 +29,8 @@ class ServicioChat{
                         return
                     }
                     guard let documentos = snapshot?.documents else {
-                        print("[ServicioChat] snapshot sin documentos")
                         return
                     }
-                    print("[ServicioChat] snapshot con \(documentos.count) documentos")
                     let nuevos = documentos.compactMap { doc -> Mensaje? in
                         do {
                             return try doc.data(as: Mensaje.self)
@@ -64,6 +60,52 @@ class ServicioChat{
         }
         catch {
             print("[ServicioChat] error al guardar: \(error)")
+        }
+    }
+
+    func borrar_mensajes(usuario: String) async {
+        let consulta = base_de_datos.collection("mensajes")
+            .whereField("usuario", isEqualTo: usuario)
+
+        await withCheckedContinuation { continuation in
+            consulta.getDocuments { [weak self] snapshot, error in
+                if let error {
+                    print("[ServicioChat] error al consultar mensajes para borrar: \(error)")
+                    continuation.resume()
+                    return
+                }
+
+                Task { @MainActor in
+                    guard let self else {
+                        continuation.resume()
+                        return
+                    }
+
+                    guard let documentos = snapshot?.documents, !documentos.isEmpty else {
+                        if self.usuario_suscrito == usuario {
+                            self.mensajes = []
+                        }
+                        continuation.resume()
+                        return
+                    }
+
+                    let lote = self.base_de_datos.batch()
+                    for documento in documentos {
+                        lote.deleteDocument(documento.reference)
+                    }
+
+                    lote.commit { error in
+                        Task { @MainActor in
+                            if let error {
+                                print("[ServicioChat] error al borrar mensajes: \(error)")
+                            } else if self.usuario_suscrito == usuario {
+                                self.mensajes = []
+                            }
+                            continuation.resume()
+                        }
+                    }
+                }
+            }
         }
     }
 

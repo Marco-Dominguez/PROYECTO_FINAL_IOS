@@ -30,7 +30,7 @@ struct BarraPestanas: View {
 
     VStack(spacing: 0) {
         BarraPestanas(
-            titulos: ["Inventario", "Chat", "Escaner AR", "Radar"],
+            titulos: ["Inventario", "Chat", "Escaner AR", "Radar", "Config"],
             indice_activo: $activo
         )
 

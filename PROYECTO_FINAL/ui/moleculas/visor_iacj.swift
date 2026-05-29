@@ -1,123 +1,43 @@
 import SwiftUI
-import RealityKit
-import mundo_virtual
 
 struct VisorIACJ: View {
     var procesando: Bool = false
+    var estado_fijo: EstadoAnimacionIACJ? = nil
+    var en_loop_estado_fijo: Bool = true
     var tamano: CGFloat = 140
-    var offset_y: Float = 0.5
+    var offset_y: Float = 0
     var distancia_z: Float = 1.5
 
-    @State private var entidad: Entity? = nil
-    @State private var estado_animacion: EstadoAnimacion = .saludando
-
-    enum EstadoAnimacion: Hashable {
-        case saludando
-        case estando
-        case pensando
-
-        var ruta: String {
-            switch self {
-            case .saludando: return "personajes/escenas/iacj-saludando"
-            case .estando:   return "personajes/escenas/iacj-estando"
-            case .pensando:  return "personajes/escenas/iacj-pensando"
-            }
-        }
-
-        var en_loop: Bool {
-            switch self {
-            case .saludando: return false
-            case .estando, .pensando: return true
-            }
-        }
-    }
+    @State private var maquina_estados = MaquinaEstadosVisorIACJ()
 
     var body: some View {
-        ZStack {
-            Color.sistema_marron_tenue.opacity(0.25)
-
-            RealityView { contenido in
-                contenido.camera = .virtual
-                if let entidad {
-                    contenido.add(entidad)
-                }
-            } update: { contenido in
-                let actuales = Array(contenido.entities)
-                let primera = actuales.first
-                if primera !== entidad {
-                    for e in actuales {
-                        contenido.remove(e)
-                    }
-                    if let entidad {
-                        contenido.add(entidad)
-                    }
-                }
-            }
-        }
-        .frame(width: tamano, height: tamano)
-        .overlay(Rectangle().stroke(Color.sistema_marron, lineWidth: 1))
-        .task(id: estado_animacion) {
-            await cargar_estado()
-        }
-        .onChange(of: procesando) {
-            transicionar_por_procesando()
+        VisorEscenaAnimada(
+            ruta_escena: estado_actual.ruta,
+            tamano: tamano,
+            offset_y: offset_y,
+            distancia_z: distancia_z,
+            en_loop: en_loop_actual
+        ) {
+            guard estado_fijo == nil else { return }
+            maquina_estados.actualizar(.animacion_finalizada)
         }
         .onAppear {
-            estado_animacion = .saludando
+            guard estado_fijo == nil else { return }
+            maquina_estados.actualizar(.aparecer)
+            maquina_estados.actualizar(.procesando_cambio(procesando))
+        }
+        .onChange(of: procesando) {
+            guard estado_fijo == nil else { return }
+            maquina_estados.actualizar(.procesando_cambio(procesando))
         }
     }
 
-    private func transicionar_por_procesando() {
-        guard estado_animacion != .saludando else { return }
-        estado_animacion = procesando ? .pensando : .estando
+    private var estado_actual: EstadoAnimacionIACJ {
+        estado_fijo ?? maquina_estados.estado_actual
     }
 
-    private func cargar_estado() async {
-        let estado_actual = estado_animacion
-        let ruta = estado_actual.ruta
-
-        do {
-            let escena = try await Entity(named: ruta, in: MundoVirtual)
-
-            let (anfitrion, animacion) = buscar_animacion(en: escena) ?? (escena, nil)
-            if let animacion {
-                if estado_actual.en_loop {
-                    anfitrion.playAnimation(animacion.repeat(), transitionDuration: 0.2)
-                } else {
-                    anfitrion.playAnimation(animacion, transitionDuration: 0.2)
-                }
-                print("[VisorIACJ] reproduciendo \(ruta) loop=\(estado_actual.en_loop)")
-            } else {
-                print("[VisorIACJ] sin animaciones embebidas en \(ruta)")
-            }
-
-            let contenedor = Entity()
-            contenedor.position = SIMD3<Float>(0, offset_y, distancia_z)
-            contenedor.addChild(escena)
-            entidad = contenedor
-
-            if !estado_actual.en_loop, let animacion {
-                let duracion = animacion.definition.duration
-                try? await Task.sleep(nanoseconds: UInt64(duracion * 1_000_000_000))
-                if !Task.isCancelled, estado_animacion == estado_actual {
-                    estado_animacion = procesando ? .pensando : .estando
-                }
-            }
-        } catch {
-            print("[VisorIACJ] error al cargar \(ruta): \(error)")
-        }
-    }
-
-    private func buscar_animacion(en entidad: Entity) -> (Entity, AnimationResource)? {
-        if let primera = entidad.availableAnimations.first {
-            return (entidad, primera)
-        }
-        for hijo in entidad.children {
-            if let resultado = buscar_animacion(en: hijo) {
-                return resultado
-            }
-        }
-        return nil
+    private var en_loop_actual: Bool {
+        estado_fijo == nil ? estado_actual.en_loop : en_loop_estado_fijo
     }
 }
 

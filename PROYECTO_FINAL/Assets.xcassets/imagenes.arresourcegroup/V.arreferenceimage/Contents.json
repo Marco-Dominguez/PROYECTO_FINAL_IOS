@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "olya-rusakova-9.jpg",
+      "filename" : "V.jpeg",
       "idiom" : "universal"
     }
   ],
@@ -11,6 +11,6 @@
   },
   "properties" : {
     "unit" : "centimeters",
-    "width" : 75
+    "width" : 30
   }
 }

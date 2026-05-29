@@ -5,7 +5,7 @@
     }
     defaultPrim = "Root"
     metersPerUnit = 1
-    upAxis = "Y"
+    upAxis = "Z"
 )
 
 def Xform "Root"
@@ -13,14 +13,13 @@ def Xform "Root"
     def "npc_negando" (
         active = true
         customData = {
-            float3 rotationEulerHint = (1.5707927, -1.5707963, 0)
+            float3 rotationEulerHint = (0, 0, -1.5707964)
         }
         prepend references = @../modelos/npc-negando.usdz@
     )
     {
-        quatf xformOp:orient = (-0.5000008, 0.49999917, 0.5000008, 0.49999917)
-        float3 xformOp:scale = (0.5, 0.5, 0.5)
-        float3 xformOp:translate = (0, -0.6, 0)
+        quatf xformOp:orient = (0.70710677, 0, 0, -0.70710677)
+        float3 xformOp:scale = (0.25, 0.25, 0.25)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
     }
 }
