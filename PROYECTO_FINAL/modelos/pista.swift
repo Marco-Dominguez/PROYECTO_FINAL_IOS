@@ -10,6 +10,8 @@ public struct Pista: Identifiable, Hashable {
     public let acertijo: String
     public let pista_objeto: String
     public let nombre_imagen: String
+    public let latitud: Double
+    public let longitud: Double
     public let siguiente_id: String?
 
     public init(
@@ -22,6 +24,8 @@ public struct Pista: Identifiable, Hashable {
         acertijo: String,
         pista_objeto: String,
         nombre_imagen: String,
+        latitud: Double,
+        longitud: Double,
         siguiente_id: String?
     ) {
         self.id = id
@@ -33,6 +37,8 @@ public struct Pista: Identifiable, Hashable {
         self.acertijo = acertijo
         self.pista_objeto = pista_objeto
         self.nombre_imagen = nombre_imagen
+        self.latitud = latitud
+        self.longitud = longitud
         self.siguiente_id = siguiente_id
     }
 }

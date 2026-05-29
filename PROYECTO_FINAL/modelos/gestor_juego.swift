@@ -20,6 +20,8 @@ public class GestorJuego {
             acertijo: "Donde empieza el rescate, busca una senal pequena: guarda forma de cilindro, suena hueca al caer y suele quedar olvidada tras una pausa. El edificio responde con la primera letra de ROMA.",
             pista_objeto: "Busca una lata.",
             nombre_imagen: "X",
+            latitud: 31.743685,
+            longitud: -106.431380,
             siguiente_id: "C"
         ),
         Pista(
@@ -32,6 +34,8 @@ public class GestorJuego {
             acertijo: "El siguiente punto vive donde el eco rueda. No camina, no vuela, pero cruza el piso cuando alguien lo impulsa. Ve al edificio marcado por la segunda letra de ROMA.",
             pista_objeto: "Busca un balon.",
             nombre_imagen: "C",
+            latitud: 31.74162,
+            longitud: -106.43221,
             siguiente_id: "L"
         ),
         Pista(
@@ -44,6 +48,8 @@ public class GestorJuego {
             acertijo: "La ruta continua donde algo se viste sin tener cuerpo propio. Tela, identidad y equipo se juntan en una sola pista. Ve al edificio marcado por la tercera letra de ROMA.",
             pista_objeto: "Busca una camiseta.",
             nombre_imagen: "L",
+            latitud: 31.74152,
+            longitud: -106.43250,
             siguiente_id: "V"
         ),
         Pista(
@@ -53,9 +59,11 @@ public class GestorJuego {
             descripcion: "Fragmento descifrado: V",
             edificio_destino: "A",
             objeto: "regla",
-            acertijo: "El ultimo fragmento no se escanea primero: se localiza. Cuando estes cerca del destino final, busca aquello que mide distancias pequenas para cerrar una distancia enorme. Ve al edificio marcado por la ultima letra de ROMA.",
+            acertijo: "El ultimo fragmento se localiza explorando y se recupera escaneando. Cuando estes cerca del destino final, busca aquello que mide distancias pequenas para cerrar una distancia enorme. Ve al edificio marcado por la ultima letra de ROMA.",
             pista_objeto: "Busca una regla.",
             nombre_imagen: "V",
+            latitud: 31.74206,
+            longitud: -106.43334,
             siguiente_id: nil
         ),
     ]

@@ -68,6 +68,8 @@ struct PanelAcertijo: View {
         acertijo: "Donde empieza el rescate, busca una senal pequena.",
         pista_objeto: "Busca una lata.",
         nombre_imagen: "X",
+        latitud: 31.743685,
+        longitud: -106.431380,
         siguiente_id: "C"
     )
 

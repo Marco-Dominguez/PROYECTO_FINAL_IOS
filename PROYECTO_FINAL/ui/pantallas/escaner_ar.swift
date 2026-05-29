@@ -5,7 +5,7 @@ struct EscanerAR: View {
     @Environment(GestorJuego.self) private var gestor
     @State private var suscripcion: EventSubscription? = nil
 
-    private let pistas_ar: [String] = ["X", "C", "L"]
+    private let pistas_ar: [String] = ["X", "C", "L", "V"]
 
     var body: some View {
         ZStack {
@@ -51,7 +51,7 @@ struct EscanerAR: View {
             VStack(alignment: .leading, spacing: 6) {
                 EtiquetaCorchete(texto: "/// ESCANER AR  /  IMAGE TRACKING ///")
 
-                Text("Apunta la camara a los objetivos AR: lata, balon y camiseta. Cada objeto recupera un fragmento.")
+                Text("Apunta la camara a los objetivos AR: lata, balon, camiseta y regla. Cada objeto recupera un fragmento.")
                     .font(.sistema_cuerpo)
                     .foregroundStyle(Color.sistema_marron)
                     .fixedSize(horizontal: false, vertical: true)
