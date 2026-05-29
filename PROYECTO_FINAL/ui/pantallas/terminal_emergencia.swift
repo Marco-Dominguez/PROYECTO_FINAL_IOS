@@ -15,10 +15,26 @@ struct TerminalEmergencia: View {
 
                 BarraPuntos()
 
-                BloqueTransmision(
-                    etiqueta: "/// ALERTA ///",
-                    cuerpo: "Atencion: un companero ha quedado atrapado tras la propagacion de un virus en las instalaciones. Los sistemas de seguridad estan comprometidos y el acceso a la sala donde se encuentra esta bloqueado por un cifrado de 4 fragmentos."
-                )
+                PanelSistema {
+                    HStack(alignment: .center, spacing: 14) {
+                        VisorNPC(
+                            estado: .negando,
+                            tamano: 132,
+                            mostrar_barrotes: false
+                        )
+
+                        Spacer(minLength: 0)
+
+                        VStack(alignment: .leading, spacing: 8) {
+                            EtiquetaCorchete(texto: "/// ALERTA ///")
+                            Text("Atencion: un companero ha quedado atrapado tras la propagacion de un virus en las instalaciones. Los sistemas de seguridad estan comprometidos y el acceso a la sala donde se encuentra esta bloqueado por un cifrado de 4 fragmentos.")
+                                .font(.sistema_cuerpo)
+                                .foregroundStyle(Color.sistema_marron)
+                                .lineSpacing(4)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+                }
 
                 BloqueTransmision(
                     etiqueta: "/// OBJETIVO ///",

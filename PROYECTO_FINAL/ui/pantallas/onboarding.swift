@@ -17,10 +17,26 @@ struct Onboarding: View {
 
                 BarraPuntos()
 
-                BloqueTransmision(
-                    etiqueta: "/// IA-CJ ///",
-                    cuerpo: "Detecto un nuevo operador. Antes de iniciar el protocolo necesito tu nombre y una llave de identificacion. El par separa tu progreso y tus comunicaciones de otros operadores con el mismo nombre."
-                )
+                PanelSistema {
+                    HStack(alignment: .center, spacing: 14) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            EtiquetaCorchete(texto: "/// IA-CJ ///")
+                            Text("Detecto un nuevo operador. Antes de iniciar el protocolo necesito tu nombre y una llave de identificacion. El par separa tu progreso y tus comunicaciones de otros operadores con el mismo nombre.")
+                                .font(.sistema_cuerpo)
+                                .foregroundStyle(Color.sistema_marron)
+                                .lineSpacing(4)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+
+                        Spacer(minLength: 0)
+
+                        VisorIACJ(
+                            estado_fijo: .saludando,
+                            en_loop_estado_fijo: true,
+                            tamano: 112
+                        )
+                    }
+                }
 
                 PanelSistema {
                     VStack(alignment: .leading, spacing: 10) {
