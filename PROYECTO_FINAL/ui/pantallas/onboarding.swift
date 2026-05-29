@@ -42,11 +42,11 @@ struct Onboarding: View {
                     VStack(alignment: .leading, spacing: 10) {
                         EtiquetaCorchete(texto: "/// IDENTIFICADOR ///")
                         CampoTextoSistema(
-                            marcador: "Nombre del operador",
+                            marcador: "Nombre del operador (ej. DDoMIe)",
                             texto: $nombre_input
                         )
                         CampoTextoSistema(
-                            marcador: "Llave de identificacion",
+                            marcador: "Llave de identificacion (ej. 1234)",
                             texto: $llave_input,
                             usar_mono: true,
                             es_seguro: true
