@@ -5,22 +5,17 @@
     }
     defaultPrim = "Root"
     metersPerUnit = 1
-    upAxis = "Y"
+    upAxis = "Z"
 )
 
 def Xform "Root"
 {
-    def "iacj_estando" (
+    def "robot_pensando3" (
         active = true
-        customData = {
-            float3 rotationEulerHint = (-1.5707964, 1.9193145e-7, -2.52516e-7)
-        }
-        references = @../modelos/iacj-estando.usdz@
+        prepend references = @../modelos/robot-pensando3.usdz@
     )
     {
-        quatf xformOp:orient = (0.70710677, -0.70710677, 1.5713589e-7, -2.1419865e-8)
-        float3 xformOp:scale = (0.5, 0.5, 0.5)
-        float3 xformOp:translate = (0, -0.6, 0)
+        float3 xformOp:scale = (0.25, 0.25, 0.25)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
     }
 }
