@@ -21,6 +21,19 @@ struct Inventario: View {
                     BarraPuntos()
 
                     PanelSistema {
+                        VStack(alignment: .leading, spacing: 8) {
+                            EtiquetaCorchete(texto: "/// ERNESTO ATRAPADO ///")
+                            HStack {
+                                Spacer()
+                                VisorNPC()
+                                Spacer()
+                            }
+                        }
+                    }
+
+                    BarraPuntos()
+
+                    PanelSistema {
                         VStack(alignment: .leading, spacing: 0) {
                             EtiquetaCorchete(texto: "/// FRAGMENTOS ///")
                                 .padding(.bottom, 8)
