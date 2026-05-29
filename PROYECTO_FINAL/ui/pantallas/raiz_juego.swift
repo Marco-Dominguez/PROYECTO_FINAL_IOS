@@ -27,6 +27,7 @@ struct RaizJuego: View {
 
 private struct TabPrincipal: View {
     @State private var indice_activo: Int = 0
+    @State private var mostrando_victoria: Bool = false
 
     private let titulos: [String] = ["Inventario", "Chat", "Escaner AR", "Radar", "Config"]
 
@@ -35,8 +36,16 @@ private struct TabPrincipal: View {
             Color.sistema_arena.ignoresSafeArea()
 
             VStack(spacing: 0) {
-                contenido_activo
+                if mostrando_victoria {
+                    PantallaVictoria {
+                        mostrando_victoria = false
+                        indice_activo = 0
+                    }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    contenido_activo
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
 
                 BarraPestanas(
                     titulos: titulos,
@@ -49,7 +58,10 @@ private struct TabPrincipal: View {
     @ViewBuilder
     private var contenido_activo: some View {
         switch indice_activo {
-        case 0: Inventario()
+        case 0:
+            Inventario {
+                mostrando_victoria = true
+            }
         case 1: ChatAgente()
         case 2: EscanerAR()
         case 3: Radar()

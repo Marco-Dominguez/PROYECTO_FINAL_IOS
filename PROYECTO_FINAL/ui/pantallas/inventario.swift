@@ -2,6 +2,8 @@ import SwiftUI
 
 struct Inventario: View {
     @Environment(GestorJuego.self) private var gestor
+    var al_ganar: (() -> Void)? = nil
+
     @State private var respuesta: String = ""
     @State private var intento_fallido: Bool = false
 
@@ -90,6 +92,9 @@ struct Inventario: View {
                                 Button("VALIDAR") {
                                     let acierto = gestor.validar_respuesta(respuesta)
                                     intento_fallido = !acierto
+                                    if acierto {
+                                        al_ganar?()
+                                    }
                                 }
                                 .buttonStyle(.sistema)
                             }
