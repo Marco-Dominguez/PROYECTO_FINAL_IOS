@@ -25,6 +25,10 @@ struct TerminalEmergencia: View {
                     cuerpo: "Tu mision: recorrer las estaciones marcadas, recuperar los 4 fragmentos del codigo y descifrar la contrasena maestra para liberarlo antes de que el virus complete su ciclo."
                 )
 
+                if let pista = gestor.pista_actual_para_acertijo ?? gestor.pistas_disponibles.first {
+                    PanelAcertijo(pista: pista, estado: .actual)
+                }
+
                 BarraPuntos()
 
                 Spacer()

@@ -10,8 +10,6 @@ struct Radar: View {
     private let id_pista_geo: String = "V"
 
     var body: some View {
-        @Bindable var gestor_bindable = gestor
-
         ZStack {
             Color.sistema_arena.ignoresSafeArea()
 
@@ -40,18 +38,7 @@ struct Radar: View {
                 gestor.desbloquear_pista(id: id_pista_geo)
             }
         }
-        .alert(
-            "Fragmento obtenido",
-            isPresented: Binding(
-                get: { gestor_bindable.pista_recien_obtenida != nil },
-                set: { nuevo in if !nuevo { gestor_bindable.descartar_popup() } }
-            ),
-            presenting: gestor_bindable.pista_recien_obtenida
-        ) { _ in
-            Button("OK", role: .cancel) { gestor_bindable.descartar_popup() }
-        } message: { pista in
-            Text("Has recuperado el fragmento: \(pista.letra) (valor \(pista.valor_romano))")
-        }
+        .alerta_fragmento_obtenido(gestor: gestor)
     }
 
     private var panel_gps: some View {
@@ -84,6 +71,11 @@ struct Radar: View {
         PanelSistema {
             VStack(alignment: .leading, spacing: 12) {
                 EtiquetaCorchete(texto: "/// OBJETIVO ///")
+
+                Text("Localiza el punto final y busca la regla para recuperar el ultimo fragmento.")
+                    .font(.sistema_cuerpo)
+                    .foregroundStyle(Color.sistema_marron)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 VStack(spacing: 0) {
                     FilaDato(etiqueta: "Lat objetivo", valor: formato(destino.coordinate.latitude), valor_tenue: true)

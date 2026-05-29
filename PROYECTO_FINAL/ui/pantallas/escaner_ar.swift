@@ -8,8 +8,6 @@ struct EscanerAR: View {
     private let pistas_ar: [String] = ["X", "C", "L"]
 
     var body: some View {
-        @Bindable var gestor_bindable = gestor
-
         ZStack {
             RealityView { contenido in
                 contenido.camera = .spatialTracking
@@ -45,18 +43,7 @@ struct EscanerAR: View {
             }
             .padding(16)
         }
-        .alert(
-            "Fragmento obtenido",
-            isPresented: Binding(
-                get: { gestor_bindable.pista_recien_obtenida != nil },
-                set: { nuevo in if !nuevo { gestor_bindable.descartar_popup() } }
-            ),
-            presenting: gestor_bindable.pista_recien_obtenida
-        ) { _ in
-            Button("OK", role: .cancel) { gestor_bindable.descartar_popup() }
-        } message: { pista in
-            Text("Has recuperado el fragmento: \(pista.letra) (valor \(pista.valor_romano))")
-        }
+        .alerta_fragmento_obtenido(gestor: gestor)
     }
 
     private var hud_superior: some View {
@@ -64,7 +51,7 @@ struct EscanerAR: View {
             VStack(alignment: .leading, spacing: 6) {
                 EtiquetaCorchete(texto: "/// ESCANER AR  /  IMAGE TRACKING ///")
 
-                Text("Apunta la camara a las marcas X, C y L para recuperar los fragmentos.")
+                Text("Apunta la camara a los objetivos AR: lata, balon y camiseta. Cada objeto recupera un fragmento.")
                     .font(.sistema_cuerpo)
                     .foregroundStyle(Color.sistema_marron)
                     .fixedSize(horizontal: false, vertical: true)
@@ -101,7 +88,11 @@ struct EscanerAR: View {
     }
 
     private func descripcion_pista(_ id: String) -> String {
-        gestor.pistas_disponibles.first(where: { $0.id == id })?.descripcion ?? "Fragmento"
+        guard let pista = gestor.pistas_disponibles.first(where: { $0.id == id }) else {
+            return "Fragmento"
+        }
+
+        return "\(pista.objeto.capitalized): \(pista.pista_objeto)"
     }
 }
 

@@ -6,8 +6,6 @@ struct Inventario: View {
     @State private var intento_fallido: Bool = false
 
     var body: some View {
-        @Bindable var gestor_bindable = gestor
-
         ZStack {
             Color.sistema_arena.ignoresSafeArea()
 
@@ -50,9 +48,36 @@ struct Inventario: View {
 
                     BarraPuntos()
 
+                    VStack(alignment: .leading, spacing: 12) {
+                        EtiquetaCorchete(texto: "/// ACERTIJOS ///")
+
+                        ForEach(gestor.pistas_disponibles) { pista in
+                            PanelAcertijo(
+                                pista: pista,
+                                estado: estado_acertijo(para: pista)
+                            )
+                        }
+                    }
+
+                    BarraPuntos()
+
+                    MiniGaleriaFragmentos(
+                        pistas: gestor.pistas_disponibles,
+                        obtenidas: gestor.pistas_obtenidas
+                    )
+
+                    BarraPuntos()
+
                     PanelSistema {
                         VStack(alignment: .leading, spacing: 12) {
                             EtiquetaCorchete(texto: "/// DESENCRIPTADOR ///")
+
+                            if !todos_fragmentos_obtenidos {
+                                MensajeEstado(
+                                    texto: "AUN FALTAN FRAGMENTOS POR RECUPERAR",
+                                    tono: .neutro
+                                )
+                            }
 
                             CampoTextoSistema(
                                 marcador: "00000000",
@@ -86,18 +111,23 @@ struct Inventario: View {
                 .padding(24)
             }
         }
-        .alert(
-            "Fragmento obtenido",
-            isPresented: Binding(
-                get: { gestor_bindable.pista_recien_obtenida != nil },
-                set: { nuevo in if !nuevo { gestor_bindable.descartar_popup() } }
-            ),
-            presenting: gestor_bindable.pista_recien_obtenida
-        ) { _ in
-            Button("OK", role: .cancel) { gestor_bindable.descartar_popup() }
-        } message: { pista in
-            Text("Has recuperado el fragmento: \(pista.letra) (valor \(pista.valor_romano))")
+        .alerta_fragmento_obtenido(gestor: gestor)
+    }
+
+    private var todos_fragmentos_obtenidos: Bool {
+        gestor.pistas_disponibles.allSatisfy { gestor.pistas_obtenidas.contains($0.id) }
+    }
+
+    private func estado_acertijo(para pista: Pista) -> PanelAcertijo.Estado {
+        if gestor.pistas_obtenidas.contains(pista.id) {
+            return .resuelto
         }
+
+        if gestor.pista_actual_para_acertijo?.id == pista.id {
+            return .actual
+        }
+
+        return .bloqueado
     }
 }
 

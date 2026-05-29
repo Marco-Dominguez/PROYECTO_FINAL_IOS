@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "L.jpg",
+      "filename" : "L.jpeg",
       "idiom" : "universal"
     }
   ],
@@ -10,6 +10,7 @@
     "version" : 1
   },
   "properties" : {
-    "width" : 75
+    "unit" : "centimeters",
+    "width" : 30
   }
 }
