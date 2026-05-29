@@ -30,7 +30,7 @@ struct ChatAgente: View {
                         EtiquetaCorchete(texto: "/// IA-CJ ///")
                         HStack {
                             Spacer()
-                            VisorModelo3D()
+                            VisorIACJ(procesando: servicio_ia.enviando)
                             Spacer()
                         }
                     }

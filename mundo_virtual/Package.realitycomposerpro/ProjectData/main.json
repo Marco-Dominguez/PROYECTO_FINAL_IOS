@@ -1,12 +1,28 @@
 {
   "pathsToIds" : {
     "\/mundo_virtual\/Sources\/mundo_virtual\/mundo_virtual.rkassets\/Scene.usda" : "F151639E-E013-4D2B-ABF5-85B8E4A32133",
+    "\/mundo_virtual\/Sources\/mundo_virtual\/mundo_virtual.rkassets\/personajes\/Untitled%20Scene.usda" : "1E3581BE-865B-43B3-91FE-A871F977FDB5",
     "mundo_virtual\/Sources\/mundo_virtual\/mundo_virtual.rkassets\/escena.usda" : "0570128D-DFD7-4E54-A639-288111E731D2",
+    "mundo_virtual\/Sources\/mundo_virtual\/mundo_virtual.rkassets\/personajes\/escenas\/iacj-estando 2.usda" : "1D8C29B6-F802-4380-8EF5-A29A9E43D134",
+    "mundo_virtual\/Sources\/mundo_virtual\/mundo_virtual.rkassets\/personajes\/escenas\/iacj-estando.usda" : "222ECA28-5454-45B2-A67F-04DA5A713A0F",
+    "mundo_virtual\/Sources\/mundo_virtual\/mundo_virtual.rkassets\/personajes\/escenas\/iacj-pensando.usda" : "587F90A1-F219-4B3C-B968-73321119FDCF",
+    "mundo_virtual\/Sources\/mundo_virtual\/mundo_virtual.rkassets\/personajes\/escenas\/iacj-saludando.usda" : "92EFDFC6-430E-4F2F-9325-1E870FA3FEAB",
+    "mundo_virtual\/Sources\/mundo_virtual\/mundo_virtual.rkassets\/personajes\/escenas\/npc-estando.usda" : "A745DF1D-627E-4619-9AA2-60D9882AC8C6",
+    "mundo_virtual\/Sources\/mundo_virtual\/mundo_virtual.rkassets\/personajes\/escenas\/npc-negando.usda" : "9D7E7564-042C-4565-8346-68315E4B2C6A",
+    "mundo_virtual\/Sources\/mundo_virtual\/mundo_virtual.rkassets\/personajes\/escenas\/npc-viendo-lados.usda" : "D3ADC599-8DC9-42DE-8C63-057AEE665193",
     "mundo_virtual\/Sources\/mundo_virtual\/mundo_virtual.rkassets\/planetario\/escena.usda" : "E72E0D13-A9A4-4232-B93F-6E24E577B6E1"
   },
   "projectID" : 7053749743288488103,
   "uuidToIntID" : {
     "0570128D-DFD7-4E54-A639-288111E731D2" : -4490820195190549948,
+    "1D8C29B6-F802-4380-8EF5-A29A9E43D134" : -2775140148142002556,
+    "1E3581BE-865B-43B3-91FE-A871F977FDB5" : 3300563425934542303,
+    "222ECA28-5454-45B2-A67F-04DA5A713A0F" : 2510497041548231069,
+    "587F90A1-F219-4B3C-B968-73321119FDCF" : -3291578572810689458,
+    "92EFDFC6-430E-4F2F-9325-1E870FA3FEAB" : 6376631904432448632,
+    "9D7E7564-042C-4565-8346-68315E4B2C6A" : 3324565022248721403,
+    "A745DF1D-627E-4619-9AA2-60D9882AC8C6" : 5181787632949796178,
+    "D3ADC599-8DC9-42DE-8C63-057AEE665193" : 5083674391846567709,
     "E72E0D13-A9A4-4232-B93F-6E24E577B6E1" : 9122825507374811819,
     "F151639E-E013-4D2B-ABF5-85B8E4A32133" : 105062175687572315
   }

@@ -1,0 +1,27 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 2.0 (494.100.6)"
+    }
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Root"
+{
+    def "iacj_estando" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (-1.5707964, 1.9193145e-7, -2.52516e-7)
+        }
+        references = @../modelos/iacj-estando.usdz@
+    )
+    {
+        quatf xformOp:orient = (0.70710677, -0.70710677, 1.5713589e-7, -2.1419865e-8)
+        float3 xformOp:scale = (0.5, 0.5, 0.5)
+        float3 xformOp:translate = (0, -0.6, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+}
+
