@@ -7,7 +7,8 @@ struct Radar: View {
 
     private let destino = CLLocation(latitude: 31.695353, longitude: -106.426460)
     //private let destino = CLLocation(latitude: 31.742145, longitude: -106.432353)
-    private let radio_metros: Double = 20
+    private let radio_senal_metros: Double = 20
+    private let radio_desbloqueo_metros: Double = 2
     private let id_pista_geo: String = "V"
 
     var body: some View {
@@ -35,7 +36,7 @@ struct Radar: View {
         }
         .onChange(of: servicio.ubicacion_actual) {
             guard let ubicacion = servicio.ubicacion_actual else { return }
-            if ubicacion.distance(from: destino) <= radio_metros {
+            if ubicacion.distance(from: destino) <= radio_desbloqueo_metros {
                 gestor.desbloquear_pista(id: id_pista_geo)
             }
         }
@@ -85,7 +86,9 @@ struct Radar: View {
                     LineaDivisora(color: .sistema_marron_tenue)
                     FilaDato(etiqueta: "Distancia", valor: distancia_legible)
                     LineaDivisora(color: .sistema_marron_tenue)
-                    FilaDato(etiqueta: "Radio", valor: String(format: "%.0f m", radio_metros), valor_tenue: true)
+                    FilaDato(etiqueta: "Senal", valor: String(format: "%.0f m", radio_senal_metros), valor_tenue: true)
+                    LineaDivisora(color: .sistema_marron_tenue)
+                    FilaDato(etiqueta: "Desbloqueo", valor: String(format: "%.0f m", radio_desbloqueo_metros), valor_tenue: true)
                 }
 
                 BarraProgresoSistema(progreso: progreso_proximidad)
@@ -109,8 +112,7 @@ struct Radar: View {
 
     private var progreso_proximidad: Double {
         guard let d = distancia_actual else { return 0 }
-        let cota_max = max(radio_metros * 10, 200)
-        return 1.0 - min(1.0, d / cota_max)
+        return 1.0 - min(1.0, max(0, d) / radio_senal_metros)
     }
 
     private var estado_objetivo: (texto: String, tono: MensajeEstado.Tono) {
@@ -120,10 +122,13 @@ struct Radar: View {
         guard let d = distancia_actual else {
             return ("SIN LECTURA DE POSICION", .neutro)
         }
-        if d <= radio_metros {
-            return ("DENTRO DEL RANGO. DESBLOQUEANDO...", .exito)
+        if d <= radio_desbloqueo_metros {
+            return ("OBJETIVO LOCALIZADO. DESBLOQUEANDO...", .exito)
         }
-        return ("ACERCATE AL OBJETIVO PARA RECUPERAR", .neutro)
+        if d <= radio_senal_metros {
+            return ("SENAL DETECTADA. ACERCATE A 2 M PARA RECUPERAR", .neutro)
+        }
+        return ("ACERCATE A MENOS DE 20 M PARA DETECTAR LA SENAL", .neutro)
     }
 
     private func formato(_ coord: Double) -> String {
