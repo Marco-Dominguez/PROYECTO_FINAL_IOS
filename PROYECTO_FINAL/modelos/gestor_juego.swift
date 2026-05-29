@@ -34,8 +34,8 @@ public class GestorJuego {
             acertijo: "El siguiente punto vive donde el eco rueda. No camina, no vuela, pero cruza el piso cuando alguien lo impulsa. Ve al edificio marcado por la segunda letra de ROMA.",
             pista_objeto: "Busca un balon.",
             nombre_imagen: "C",
-            latitud: 31.74162,
-            longitud: -106.43221,
+            latitud: 31.741749,
+            longitud: -106.432372,
             siguiente_id: "L"
         ),
         Pista(
@@ -48,8 +48,8 @@ public class GestorJuego {
             acertijo: "La ruta continua donde algo se viste sin tener cuerpo propio. Tela, identidad y equipo se juntan en una sola pista. Ve al edificio marcado por la tercera letra de ROMA.",
             pista_objeto: "Busca una camiseta.",
             nombre_imagen: "L",
-            latitud: 31.74152,
-            longitud: -106.43250,
+            latitud: 31.741838,
+            longitud: -106.432400,
             siguiente_id: "V"
         ),
         Pista(
@@ -62,8 +62,8 @@ public class GestorJuego {
             acertijo: "El ultimo fragmento se localiza explorando y se recupera escaneando. Cuando estes cerca del destino final, busca aquello que mide distancias pequenas para cerrar una distancia enorme. Ve al edificio marcado por la ultima letra de ROMA.",
             pista_objeto: "Busca una regla.",
             nombre_imagen: "V",
-            latitud: 31.74206,
-            longitud: -106.43334,
+            latitud: 31.742097,
+            longitud: -106.433407,
             siguiente_id: nil
         ),
     ]

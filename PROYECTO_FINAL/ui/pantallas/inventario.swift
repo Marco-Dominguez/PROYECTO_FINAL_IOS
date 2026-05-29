@@ -5,7 +5,7 @@ struct Inventario: View {
     var al_ganar: (() -> Void)? = nil
 
     @State private var respuesta: String = ""
-    @State private var intento_fallido: Bool = false
+    @State private var mensaje_error_desencriptador: String? = nil
     private let alto_panel_superior: CGFloat = 220
 
     var body: some View {
@@ -113,11 +113,7 @@ struct Inventario: View {
                 HStack {
                     Spacer()
                     Button("VALIDAR") {
-                        let acierto = gestor.validar_respuesta(respuesta)
-                        intento_fallido = !acierto
-                        if acierto {
-                            al_ganar?()
-                        }
+                        validar_desencriptador()
                     }
                     .buttonStyle(.sistema)
                 }
@@ -127,13 +123,27 @@ struct Inventario: View {
                         texto: "VICTORIA: PROTOCOLO COMPLETADO",
                         tono: .exito
                     )
-                } else if intento_fallido {
+                } else if let mensaje_error_desencriptador {
                     MensajeEstado(
-                        texto: "CONTRASENA INCORRECTA",
+                        texto: mensaje_error_desencriptador,
                         tono: .error
                     )
                 }
             }
+        }
+    }
+
+    private func validar_desencriptador() {
+        guard todos_fragmentos_obtenidos else {
+            mensaje_error_desencriptador = "ERROR DE DESENCRIPTACION, NO SE HAN RECOLECTADO TODOS LOS FRAGMENTOS"
+            return
+        }
+
+        let acierto = gestor.validar_respuesta(respuesta)
+        mensaje_error_desencriptador = acierto ? nil : "CONTRASENA INCORRECTA"
+
+        if acierto {
+            al_ganar?()
         }
     }
 
