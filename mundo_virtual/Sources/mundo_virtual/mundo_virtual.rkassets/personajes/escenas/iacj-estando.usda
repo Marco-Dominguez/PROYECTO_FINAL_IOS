@@ -10,9 +10,9 @@
 
 def Xform "Root"
 {
-    def "robot_pensando3" (
+    def "iacj_estando" (
         active = true
-        prepend references = @../modelos/robot-pensando3.usdz@
+        prepend references = @../modelos/iacj-estando.usdz@
     )
     {
         float3 xformOp:scale = (0.25, 0.25, 0.25)

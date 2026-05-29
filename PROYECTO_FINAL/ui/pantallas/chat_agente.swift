@@ -93,7 +93,7 @@ struct ChatAgente: View {
                             .disabled(
                                 mensaje.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                                 || servicio_ia.enviando
-                                || perfil.nombre == nil
+                                || perfil.identificador_sesion == nil
                             )
                         }
                     }
@@ -101,8 +101,8 @@ struct ChatAgente: View {
             }
             .padding(24)
         }
-        .task(id: perfil.nombre) {
-            if let usuario = perfil.nombre {
+        .task(id: perfil.identificador_sesion) {
+            if let usuario = perfil.identificador_sesion {
                 servicio_chat.obtener_mensajes(usuario: usuario)
             }
         }
@@ -150,7 +150,7 @@ struct ChatAgente: View {
     }
 
     private func enviar() async {
-        guard let usuario = perfil.nombre else { return }
+        guard let usuario = perfil.identificador_sesion else { return }
         let texto = mensaje.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !texto.isEmpty else { return }
         mensaje = ""
@@ -196,7 +196,7 @@ struct ChatAgente: View {
         .environment(GestorJuego())
         .environment({
             let p = PerfilUsuario()
-            p.establecer(nombre: "operador_demo")
+            p.establecer(nombre: "operador_demo", llave: "demo")
             return p
         }())
 }

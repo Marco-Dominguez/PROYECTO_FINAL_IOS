@@ -3,6 +3,7 @@ import SwiftUI
 struct Onboarding: View {
     @Environment(PerfilUsuario.self) private var perfil
     @State private var nombre_input: String = ""
+    @State private var llave_input: String = ""
 
     var body: some View {
         ZStack {
@@ -18,7 +19,7 @@ struct Onboarding: View {
 
                 BloqueTransmision(
                     etiqueta: "/// IA-CJ ///",
-                    cuerpo: "Detecto un nuevo operador. Antes de iniciar el protocolo necesito un identificador unico para vincular tu progreso a esta sesion. Tu progreso y conversaciones quedaran ligados a este nombre en este dispositivo."
+                    cuerpo: "Detecto un nuevo operador. Antes de iniciar el protocolo necesito tu nombre y una llave de identificacion. El par separa tu progreso y tus comunicaciones de otros operadores con el mismo nombre."
                 )
 
                 PanelSistema {
@@ -28,14 +29,21 @@ struct Onboarding: View {
                             marcador: "Nombre del operador",
                             texto: $nombre_input
                         )
+                        CampoTextoSistema(
+                            marcador: "Llave de identificacion",
+                            texto: $llave_input,
+                            usar_mono: true,
+                            es_seguro: true
+                        )
                         HStack {
                             Spacer()
                             Button("REGISTRAR Y CONTINUAR") {
-                                perfil.establecer(nombre: nombre_input)
+                                perfil.establecer(nombre: nombre_input, llave: llave_input)
                             }
                             .buttonStyle(.sistema)
                             .disabled(
                                 nombre_input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                                || llave_input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                             )
                         }
                     }

@@ -5,7 +5,8 @@ struct Radar: View {
     @Environment(GestorJuego.self) private var gestor
     @State private var servicio = ServicioUbicacion()
 
-    private let destino = CLLocation(latitude: 31.742145, longitude: -106.432353)
+    private let destino = CLLocation(latitude: 31.695353, longitude: -106.426460)
+    //private let destino = CLLocation(latitude: 31.742145, longitude: -106.432353)
     private let radio_metros: Double = 20
     private let id_pista_geo: String = "V"
 

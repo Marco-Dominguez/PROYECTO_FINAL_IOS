@@ -70,6 +70,19 @@ public class GestorJuego {
 
     public init() {}
 
+    public var total_pasos_progreso: Int {
+        pistas_disponibles.count + 1
+    }
+
+    public var pasos_progreso_completados: Int {
+        pistas_obtenidas.count + (puzzle_resuelto ? 1 : 0)
+    }
+
+    public var porcentaje_progreso: Int {
+        guard total_pasos_progreso > 0 else { return 0 }
+        return Int((Double(pasos_progreso_completados) / Double(total_pasos_progreso)) * 100)
+    }
+
     public var pista_actual_para_acertijo: Pista? {
         pistas_disponibles.first { !pistas_obtenidas.contains($0.id) }
     }
@@ -123,11 +136,29 @@ public class GestorJuego {
         fase = .terminal
     }
 
+    public func reiniciar_partida() {
+        if let usuario = usuario_actual {
+            borrar_progreso(usuario: usuario)
+        }
+
+        pistas_obtenidas = []
+        puzzle_resuelto = false
+        pista_recien_obtenida = nil
+        fase = .terminal
+    }
+
     private func guardar() {
         guard let usuario = usuario_actual else { return }
         let prefijo = "progreso.\(usuario)"
         let defaults = UserDefaults.standard
         defaults.set(Array(pistas_obtenidas), forKey: "\(prefijo).pistas_obtenidas")
         defaults.set(puzzle_resuelto, forKey: "\(prefijo).puzzle_resuelto")
+    }
+
+    private func borrar_progreso(usuario: String) {
+        let prefijo = "progreso.\(usuario)"
+        let defaults = UserDefaults.standard
+        defaults.removeObject(forKey: "\(prefijo).pistas_obtenidas")
+        defaults.removeObject(forKey: "\(prefijo).puzzle_resuelto")
     }
 }
